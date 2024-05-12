@@ -25,6 +25,7 @@ public class elementSelector : MonoBehaviour
         playerFireAttacks.enabled = false;
         playerEarthAttacks.enabled = false;
         playerWaterAttacks.enabled = false;
+        playerAirAttacks.enabled = false;
 
         // Check if the fireButton is assigned
     }

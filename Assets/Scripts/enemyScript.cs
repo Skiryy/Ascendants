@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Dit wordt toegevoegd omdat de text functie van unity zo heet.
+using TMPro; 
 
 public class enemyScript : MonoBehaviour
 {
