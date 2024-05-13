@@ -1,48 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterIMG : MonoBehaviour
 {
-
-    public GameObject StandingStill;
-    public GameObject shootingFire;
-    public GameObject shootingWater;
+    public Animator animator;
     private PlayerFireAttacks playerFireAttacks;
-    private PlayerEarthAttacks playerEarthAttacks;
-    private PlayerWaterAttacks playerWaterAttacks;
-    private PlayerAirAttacks playerAirAttacks;
+    private CharacterMover characterMover;
 
-    // Start is called before the first frame update
+    private bool prevMoveAttackStatus; // Keep track of previous moveAttackStatus
+
     void Start()
     {
-        StandingStill.SetActive(true);  
+        characterMover = GetComponent<CharacterMover>();
         playerFireAttacks = GetComponent<PlayerFireAttacks>();
-        playerEarthAttacks = GetComponent<PlayerEarthAttacks>();
-        playerWaterAttacks = GetComponent<PlayerWaterAttacks>();
-        playerAirAttacks = GetComponent<PlayerAirAttacks>();
+        prevMoveAttackStatus = false; // Initialize prevMoveAttackStatus
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (playerFireAttacks.moveAttackStatus == true) {
-            StandingStill.SetActive(false);
-            shootingFire.SetActive(true);
-            shootingWater.SetActive(false);
-
-        }
-        else if (playerWaterAttacks.attackStatus == true)
+        // Check if moveAttackStatus has just become true in the current frame
+        if (playerFireAttacks.moveAttackStatus && !prevMoveAttackStatus && !characterMover.characterRotate)
         {
-            shootingWater.SetActive(true);
-            StandingStill.SetActive(false);
-            shootingFire.SetActive(false);
+            animator.SetTrigger("fireAttack");
+        }
+        else if (playerFireAttacks.moveAttackStatus && !prevMoveAttackStatus && characterMover.characterRotate)
+        {
+            // Fire animation right
         }
         else
         {
-            StandingStill.SetActive(true);
-            shootingFire.SetActive(false);
-            shootingWater.SetActive(false);
+            animator.SetTrigger("Idle");
         }
+
+        // Update prevMoveAttackStatus for the next frame
+        prevMoveAttackStatus = playerFireAttacks.moveAttackStatus;
     }
 }

@@ -57,7 +57,7 @@ public class PlayerFireAttacks : MonoBehaviour
             //FireAttackInstance.transform.Translate(Vector3.left * direction);
             Destroy(FireAttackInstance, 1f);
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         moveAttackStatus = false;
         yield return new WaitForSeconds(1.5f);
         attackStatus = false;
