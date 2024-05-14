@@ -41,15 +41,15 @@ public class EnemyAttack : MonoBehaviour
         }
         if (selectedAttack == "Dash")
         {
-            jumpAttack();
+            barrelmovingAttack();
         }
         if (selectedAttack == "Jump")
         {
-            jumpAttack();
+            barrelmovingAttack();
         }
         if (selectedAttack == "Wait")
         {
-            jumpAttack();
+            barrelmovingAttack();
         }
         // Implement logic for other attacks (Jump, Dash, Wait) here
     }
@@ -100,8 +100,8 @@ public class EnemyAttack : MonoBehaviour
     IEnumerator BarrelMovingCoroutine()
     {
         float attackDuration = 10f; // Set the attack duration
-        float moveSpeed = 1f; // Adjust the speed as needed
-        float fireRate = 1f; // Adjust the fire rate as needed
+        float moveSpeed = 0.8f; // Adjust the speed as needed
+        float fireRate = 0.8f; // Adjust the fire rate as needed
 
         // Store the start time of the attack
         float startTime = Time.time;
@@ -113,7 +113,7 @@ public class EnemyAttack : MonoBehaviour
             barrel.transform.position = new Vector3(barrel.transform.position.x, randomY, barrel.transform.position.z);
             int direction = (tankRotation) ? 1 : -1;
             Vector3 barrelPosition = barrel.transform.position;
-            Vector3 offsetPosition = barrelPosition + Vector3.right * 2.9f * direction;
+            Vector3 offsetPosition = barrelPosition + Vector3.right * 1f * direction;
 
             if (Time.time - lastAttackTime >= fireRate)
             {
@@ -124,10 +124,10 @@ public class EnemyAttack : MonoBehaviour
                     Destroy(tankBulletInstance, 5f);
                     yield return new WaitForSeconds(0.5f);
                     GameObject tankBulletInstance2 = Instantiate(bullet, offsetPosition, Quaternion.Euler(0, 90, -90));
-                    Destroy(tankBulletInstance2, 2f);
+                    Destroy(tankBulletInstance2, 5f);
                     yield return new WaitForSeconds(0.5f);
                     GameObject tankBulletInstance3 = Instantiate(bullet, offsetPosition, Quaternion.Euler(0, 90, -90));
-                    Destroy(tankBulletInstance3, 2f);
+                    Destroy(tankBulletInstance3, 5f);
                 }
                 else
                 {

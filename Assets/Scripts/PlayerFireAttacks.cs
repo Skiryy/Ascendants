@@ -43,19 +43,19 @@ public class PlayerFireAttacks : MonoBehaviour
         bool attackDirection = characterMover.characterRotate;
         Vector3 playerPosition = transform.position;
         int direction = (attackDirection) ? 1 : -1;
-        Vector3 offsetPosition = playerPosition + Vector3.right * 01f * direction;
+        Vector3 offsetPosition = playerPosition + Vector3.right * 0.1f * direction;
 
         if (attackDirection == false)
         {
             GameObject FireAttackInstance = Instantiate(fireAttack, offsetPosition, Quaternion.Euler(0, 270, 0));
             //FireAttackInstance.transform.Translate(Vector3.left * direction);
-            Destroy(FireAttackInstance, 1f);
+            Destroy(FireAttackInstance, 2f);
         }
         else
         {
             GameObject FireAttackInstance = Instantiate(fireAttack, offsetPosition, Quaternion.Euler(0, 90, 0));
             //FireAttackInstance.transform.Translate(Vector3.left * direction);
-            Destroy(FireAttackInstance, 1f);
+            Destroy(FireAttackInstance, 2f);
         }
         yield return new WaitForSeconds(1f);
         moveAttackStatus = false;

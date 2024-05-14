@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tank Bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 85cc38624ef3ca746aadd9e5364dab2d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 85cc38624ef3ca746aadd9e5364dab2d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.17
