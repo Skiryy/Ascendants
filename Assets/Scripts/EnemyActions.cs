@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    public Animator animator;
     private enemyScript EnemyScript;
     public GameObject bullet;
     public GameObject normalAnimation;
@@ -45,11 +47,11 @@ public class EnemyAttack : MonoBehaviour
         }
         if (selectedAttack == "Jump")
         {
-            barrelmovingAttack();
+            jumpAttack();
         }
         if (selectedAttack == "Wait")
         {
-            barrelmovingAttack();
+            jumpAttack();
         }
         // Implement logic for other attacks (Jump, Dash, Wait) here
     }
@@ -65,32 +67,22 @@ public class EnemyAttack : MonoBehaviour
     {
         float jumpAmount = 2;
         float currentJumps = 0;
+        animator.SetTrigger("tankJumpLoading");
+        barrel.SetActive(false);
+        yield return new WaitForSeconds(4);
         while (currentJumps < jumpAmount)
         {
-            normalAnimation.gameObject.SetActive(false);
-            flyingAnimation.SetActive(false);
-            jumpAnimation.gameObject.SetActive(true);
-            barrel.SetActive(false);
-            yield return new WaitForSeconds(4);
             Vector3 newPositionUp = new Vector3(player.transform.position.x, 5, player.transform.position.z);
             Vector3 newPositionDown = new Vector3(player.transform.position.x, 0 , player.transform.position.z);
             damageMultiplier = 0f;
             transform.position = newPositionUp;
-            flyingAnimation.gameObject.SetActive(true);
-            jumpAnimation.gameObject.SetActive(false);
-            barrel.SetActive(false);
+            animator.SetTrigger("Hover");
             yield return new WaitForSeconds(2);
             damageMultiplier = 1f;
             transform.position = newPositionDown;
+            animator.SetTrigger("tankIdle");
             currentJumps += 1;
-            normalAnimation.gameObject.SetActive(true);
-            jumpAnimation.gameObject.SetActive(false);
-            flyingAnimation.SetActive(false);
-            barrel.SetActive(true);
         }
-        normalAnimation.gameObject.SetActive(true);
-        jumpAnimation.gameObject.SetActive(false);
-        flyingAnimation.SetActive(false);
         barrel.SetActive(true);
         yield return new WaitForSeconds(5);
         transform.position = leftposition;
@@ -99,6 +91,7 @@ public class EnemyAttack : MonoBehaviour
     }
     IEnumerator BarrelMovingCoroutine()
     {
+
         float attackDuration = 10f; // Set the attack duration
         float moveSpeed = 0.8f; // Adjust the speed as needed
         float fireRate = 0.8f; // Adjust the fire rate as needed

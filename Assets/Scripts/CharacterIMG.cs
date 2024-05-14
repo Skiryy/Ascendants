@@ -7,12 +7,14 @@ public class CharacterIMG : MonoBehaviour
     private CharacterMover characterMover;
 
     private bool prevMoveAttackStatus; // Keep track of previous moveAttackStatus
+    private bool isJumpingTriggered; // Flag to track if jumping animation is triggered
 
     void Start()
     {
         characterMover = GetComponent<CharacterMover>();
         playerFireAttacks = GetComponent<PlayerFireAttacks>();
         prevMoveAttackStatus = false; // Initialize prevMoveAttackStatus
+        isJumpingTriggered = false; // Initialize jumping animation trigger flag
     }
 
     void Update()
@@ -26,10 +28,20 @@ public class CharacterIMG : MonoBehaviour
         {
             // Fire animation right
         }
-        else
+        else if (characterMover.isGrounded == false && !isJumpingTriggered)
+        {
+            animator.SetTrigger("Jumping");
+            isJumpingTriggered = true; // Set the flag to true to indicate jumping animation is triggered
+        }
+        else if (characterMover.isGrounded)
+        {
+            isJumpingTriggered = false; // Reset the flag when character is grounded
+        }
+        else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             animator.SetTrigger("Idle");
         }
+
 
         // Update prevMoveAttackStatus for the next frame
         prevMoveAttackStatus = playerFireAttacks.moveAttackStatus;

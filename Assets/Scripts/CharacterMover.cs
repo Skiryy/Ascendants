@@ -11,8 +11,9 @@ public class CharacterMover : MonoBehaviour
     public float crouchScale = 0.5f;
     public float downForce = 8f;
     public bool characterRotate;
+    public bool jumping;
 
-    private bool isGrounded;
+    public bool isGrounded;
     private bool isCrouching;
 
     void Start()
