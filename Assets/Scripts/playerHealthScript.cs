@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
+using TMPro;
 
 public class playerHealthScript : MonoBehaviour
 {
     public float health = 100f;
+    private CharacterMover characterMover;
     public TextMeshProUGUI enemyHealthDisplay;
-    // Start is called before the first frame update
+    public Collider hitbox;
+
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         enemyHealthDisplay.text = "Player Health" + health;
@@ -23,8 +24,36 @@ public class playerHealthScript : MonoBehaviour
             Death();
         }
     }
+
     void Death()
     {
         Debug.Log("Dead");
+    }
+
+    public void hit()
+    {
+        StartCoroutine(GettingHit());
+    }
+
+    IEnumerator GettingHit()
+    {
+        bool stun = true;
+        health -= 20f;
+        hitbox.enabled = false;
+
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        float startTime = Time.time;
+        float stunDuration = 2f;
+
+        while (Time.time < startTime + stunDuration)
+        {
+            //stun
+            yield return null;
+        }
+
+        stun = false;
+        yield return new WaitForSeconds(1);
+        hitbox.enabled = true; // Reactivate hitbox after stun
     }
 }

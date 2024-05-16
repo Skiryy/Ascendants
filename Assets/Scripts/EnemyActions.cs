@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyAttack : MonoBehaviour
 {
@@ -25,7 +25,6 @@ public class EnemyAttack : MonoBehaviour
     {
         EnemyScript = GetComponent<enemyScript>();
         chooseAttack();
-
     }
 
     void Update()
@@ -51,47 +50,89 @@ public class EnemyAttack : MonoBehaviour
         }
         if (selectedAttack == "Wait")
         {
-            jumpAttack();
+            waitAttack();
         }
         // Implement logic for other attacks (Jump, Dash, Wait) here
     }
+
     void jumpAttack()
     {
         StartCoroutine(jumpAttackCoroutine());
-    }    
+    }
+    void waitAttack()
+    {
+        StartCoroutine(waitAttackCoroutine());
+    }
+
     void barrelmovingAttack()
     {
         StartCoroutine(BarrelMovingCoroutine());
     }
+
     IEnumerator jumpAttackCoroutine()
     {
-        float jumpAmount = 2;
-        float currentJumps = 0;
+        float standStillDuration = 2f; // Duration to stand still
+        float verticalRiseDuration = 3f; // Duration for vertical rise
+        float verticalPauseDuration = 1f; // Duration to pause after vertical rise
+        float returnDuration = 1.5f; // Duration for the return movement
+        Vector3 position;
+
+        // Starting position is the current position of the enemy
+        Vector3 startPosition = transform.position;
+
+        // Calculate the position above the player
+        Vector3 targetPositionAbovePlayer = new Vector3(player.transform.position.x, 5, player.transform.position.z);
+
+        // Trigger tankJumpLoading animation
         animator.SetTrigger("tankJumpLoading");
         barrel.SetActive(false);
-        yield return new WaitForSeconds(4);
-        while (currentJumps < jumpAmount)
+        yield return new WaitForSeconds(2f); // Delay after the attack is
+
+
+        // Vertical rise
+        animator.SetTrigger("Hover");
+        yield return new WaitForSeconds(0.5f);
+        float elapsedTime = 0f;
+        while (elapsedTime < verticalRiseDuration)
         {
-            Vector3 newPositionUp = new Vector3(player.transform.position.x, 5, player.transform.position.z);
-            Vector3 newPositionDown = new Vector3(player.transform.position.x, 0 , player.transform.position.z);
-            damageMultiplier = 0f;
-            transform.position = newPositionUp;
-            animator.SetTrigger("Hover");
-            yield return new WaitForSeconds(2);
-            damageMultiplier = 1f;
-            transform.position = newPositionDown;
-            animator.SetTrigger("tankIdle");
-            currentJumps += 1;
+            float t = elapsedTime / verticalRiseDuration;
+            transform.position = Vector3.Lerp(startPosition, targetPositionAbovePlayer, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+
+
+        // Horizontal pause
+        yield return new WaitForSeconds(verticalPauseDuration);
+
+
+        // Slam down
+        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+        animator.SetTrigger("tankIdle");
         barrel.SetActive(true);
-        yield return new WaitForSeconds(5);
-        transform.position = leftposition;
+        yield return new WaitForSeconds(1f); // Delay for slam down
+
+        // Move back to the starting position gradually
+        Vector3 startPositionSlamDown = transform.position; // The position where the slam down happened
+
+        float elapsedTimeReturn = 0f;
+        while (elapsedTimeReturn < returnDuration)
+        {
+            float tReturn = elapsedTimeReturn / returnDuration;
+            transform.position = Vector3.Lerp(startPositionSlamDown, startPosition, tReturn);
+            elapsedTimeReturn += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = startPosition; // Ensure exact position at the end of interpolation
+
         Debug.Log("Finished");
         chooseAttack();
     }
+
     IEnumerator BarrelMovingCoroutine()
     {
-
         float attackDuration = 10f; // Set the attack duration
         float moveSpeed = 0.8f; // Adjust the speed as needed
         float fireRate = 0.8f; // Adjust the fire rate as needed
@@ -142,17 +183,24 @@ public class EnemyAttack : MonoBehaviour
         Debug.Log("Finito");
         chooseAttack();
     }
+    IEnumerator waitAttackCoroutine()
+    {
+        yield return new WaitForSeconds(5);
+        chooseAttack();
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.layer == 3)
         {
             playerHealthScript PlayerHealthScript = collision.gameObject.GetComponent<playerHealthScript>();
-            PlayerHealthScript.health -= (10f * damageMultiplier);
+            PlayerHealthScript.hit();
             Debug.Log("Player hit");
 
         }
-        if (collision.gameObject.layer == 7) {
+        if (collision.gameObject.layer == 7)
+        {
             Destroy(collision.gameObject);
-                }
+        }
     }
 }
