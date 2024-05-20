@@ -13,7 +13,8 @@ public class EnemyAttack : MonoBehaviour
     public GameObject jumpAnimation;
     public GameObject player;
     public GameObject barrel;
-    private List<string> attacks = new List<string> { "BarrelMoving", "Jump", "Dash", "Wait" };
+    public GameObject lazerVisualiser;
+    private List<string> attacks = new List<string> { "BarrelMoving", "Jump", "Wait" };
     private System.Random rand = new System.Random();
     private float attackCooldown = 10f;
     private float lastAttackTime = 0f;
@@ -37,10 +38,6 @@ public class EnemyAttack : MonoBehaviour
         string selectedAttack = attacks[rand.Next(attacks.Count)];
         Debug.Log("Enemy performs " + selectedAttack);
         if (selectedAttack == "BarrelMoving")
-        {
-            barrelmovingAttack();
-        }
-        if (selectedAttack == "Dash")
         {
             barrelmovingAttack();
         }
@@ -69,53 +66,56 @@ public class EnemyAttack : MonoBehaviour
         StartCoroutine(BarrelMovingCoroutine());
     }
 
+
     IEnumerator jumpAttackCoroutine()
     {
-        float standStillDuration = 2f; // Duration to stand still
-        float verticalRiseDuration = 3f; // Duration for vertical rise
-        float verticalPauseDuration = 1f; // Duration to pause after vertical rise
-        float returnDuration = 1.5f; // Duration for the return movement
-        Vector3 position;
+        float verticalRiseDuration = 1.5f; // Duration for vertical rise
+        float verticalPauseDuration = 0.5f; // Duration to pause after vertical rise
+        float returnDuration = 3f; // Duration for the return movement
+        float jumpAmount = Random.Range(1, 5);
 
-        // Starting position is the current position of the enemy
         Vector3 startPosition = transform.position;
-
-        // Calculate the position above the player
-        Vector3 targetPositionAbovePlayer = new Vector3(player.transform.position.x, 5, player.transform.position.z);
-
-        // Trigger tankJumpLoading animation
-        animator.SetTrigger("tankJumpLoading");
-        barrel.SetActive(false);
-        yield return new WaitForSeconds(2f); // Delay after the attack is
-
-
-        // Vertical rise
-        animator.SetTrigger("Hover");
-        yield return new WaitForSeconds(0.5f);
-        float elapsedTime = 0f;
-        while (elapsedTime < verticalRiseDuration)
+        while (jumpAmount > 0)
         {
-            float t = elapsedTime / verticalRiseDuration;
-            transform.position = Vector3.Lerp(startPosition, targetPositionAbovePlayer, t);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            Vector3 currentPosition = transform.position;
+
+            // Calculate the position above the player
+            Vector3 targetPositionAbovePlayer = new Vector3(player.transform.position.x, 5, player.transform.position.z);
+
+            // Trigger tankJumpLoading animation
+            animator.SetTrigger("tankJumpLoading");
+            barrel.SetActive(false);
+            yield return new WaitForSeconds(2f); // Delay after the attack is
+
+
+            // Vertical rise
+            animator.SetTrigger("Hover");
+            yield return new WaitForSeconds(0.5f);
+            float elapsedTime = 0f;
+            while (elapsedTime < verticalRiseDuration)
+            {
+                float t = elapsedTime / verticalRiseDuration;
+                transform.position = Vector3.Lerp(currentPosition, targetPositionAbovePlayer, t);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+
+
+            // Horizontal pause
+            yield return new WaitForSeconds(verticalPauseDuration);
+
+
+            // Slam down
+            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+            animator.SetTrigger("tankFall"); ;
+            yield return new WaitForSeconds(1f); // Delay for slam down
+            animator.SetTrigger("tankIdle");
+            barrel.SetActive(true);
+            jumpAmount -= 1;
         }
-
-
-
-        // Horizontal pause
-        yield return new WaitForSeconds(verticalPauseDuration);
-
-
-        // Slam down
-        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-        animator.SetTrigger("tankIdle");
-        barrel.SetActive(true);
-        yield return new WaitForSeconds(1f); // Delay for slam down
-
         // Move back to the starting position gradually
-        Vector3 startPositionSlamDown = transform.position; // The position where the slam down happened
-
+        Vector3 startPositionSlamDown = transform.position; // The position where the slam down 
         float elapsedTimeReturn = 0f;
         while (elapsedTimeReturn < returnDuration)
         {
@@ -126,6 +126,7 @@ public class EnemyAttack : MonoBehaviour
         }
 
         transform.position = startPosition; // Ensure exact position at the end of interpolation
+
 
         Debug.Log("Finished");
         chooseAttack();
