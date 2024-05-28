@@ -69,8 +69,8 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator jumpAttackCoroutine()
     {
-        float verticalRiseDuration = 1.5f; // Duration for vertical rise
-        float verticalPauseDuration = 0.5f; // Duration to pause after vertical rise
+        float verticalRiseDuration = 0.3f; // Duration for vertical rise
+        float verticalPauseDuration = 0.3f; // Duration to pause after vertical rise
         float returnDuration = 3f; // Duration for the return movement
         float jumpAmount = Random.Range(1, 5);
 
@@ -101,7 +101,7 @@ public class EnemyAttack : MonoBehaviour
             }
 
 
-
+                
             // Horizontal pause
             yield return new WaitForSeconds(verticalPauseDuration);
 
