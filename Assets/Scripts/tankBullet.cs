@@ -25,7 +25,7 @@ public class tankBullet : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             playerHealthScript PlayerHealthScript = collision.gameObject.GetComponent<playerHealthScript>();
-            PlayerHealthScript.hit();
+            PlayerHealthScript.rocketHit();
             Destroy(gameObject);
         }
     }

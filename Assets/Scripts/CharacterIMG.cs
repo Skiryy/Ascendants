@@ -5,45 +5,55 @@ public class CharacterIMG : MonoBehaviour
     public Animator animator;
     private PlayerFireAttacks playerFireAttacks;
     private CharacterMover characterMover;
+    private playerHealthScript playerHealthScript;
 
     private bool prevMoveAttackStatus; // Keep track of previous moveAttackStatus
     private bool isJumpingTriggered; // Flag to track if jumping animation is triggered
+    private bool wasGrounded; // Track grounded state from previous frame
 
     void Start()
     {
         characterMover = GetComponent<CharacterMover>();
+        playerHealthScript = GetComponent<playerHealthScript>();
         playerFireAttacks = GetComponent<PlayerFireAttacks>();
         prevMoveAttackStatus = false; // Initialize prevMoveAttackStatus
         isJumpingTriggered = false; // Initialize jumping animation trigger flag
+        wasGrounded = true; // Assuming character starts grounded
     }
 
     void Update()
     {
-        // Check if moveAttackStatus has just become true in the current frame
+        // Fire attack logic
         if (playerFireAttacks.moveAttackStatus && !prevMoveAttackStatus && !characterMover.characterRotate)
         {
             animator.SetTrigger("fireAttack");
         }
-        else if (playerFireAttacks.moveAttackStatus && !prevMoveAttackStatus && characterMover.characterRotate)
+
+        // Hit logic
+        if (playerHealthScript.stunned)
         {
-            // Fire animation right
+            animator.SetBool("isHit", true);
         }
-        else if (characterMover.isGrounded == false && !isJumpingTriggered)
+        else
+        {
+            animator.SetBool("isHit", false);
+        }
+
+        // Jumping logic
+        if (!characterMover.isGrounded && wasGrounded)
         {
             animator.SetTrigger("Jumping");
             isJumpingTriggered = true; // Set the flag to true to indicate jumping animation is triggered
         }
-        else if (characterMover.isGrounded)
-        {
-            isJumpingTriggered = false; // Reset the flag when character is grounded
-        }
-        else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+
+        // Set idle if all conditions are false
+        if (characterMover.isGrounded && !playerHealthScript.stunned && !playerFireAttacks.moveAttackStatus && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping") && !animator.GetCurrentAnimatorStateInfo(0).IsName("fireAttack"))
         {
             animator.SetTrigger("Idle");
         }
 
-
-        // Update prevMoveAttackStatus for the next frame
+        // Update states for the next frame
         prevMoveAttackStatus = playerFireAttacks.moveAttackStatus;
+        wasGrounded = characterMover.isGrounded;
     }
 }
