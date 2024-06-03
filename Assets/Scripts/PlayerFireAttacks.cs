@@ -49,17 +49,17 @@ public class PlayerFireAttacks : MonoBehaviour
         {
             GameObject FireAttackInstance = Instantiate(fireAttack, offsetPosition, Quaternion.Euler(0, 270, 0));
             //FireAttackInstance.transform.Translate(Vector3.left * direction);
-            Destroy(FireAttackInstance, 2f);
+            Destroy(FireAttackInstance, 1f);
         }
         else
         {
             GameObject FireAttackInstance = Instantiate(fireAttack, offsetPosition, Quaternion.Euler(0, 90, 0));
             //FireAttackInstance.transform.Translate(Vector3.left * direction);
-            Destroy(FireAttackInstance, 2f);
+            Destroy(FireAttackInstance, 1f);
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         moveAttackStatus = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         attackStatus = false;
     }
 }

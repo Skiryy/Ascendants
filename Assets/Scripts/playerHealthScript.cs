@@ -17,16 +17,14 @@ public class playerHealthScript : MonoBehaviour
     public bool stunned;
     public bool notAgain;
 
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
     }
 
     void Update()
     {
-        enemyHealthDisplay.text = "Player Health" + health;
+        enemyHealthDisplay.text = "Player Health: " + health;
         if (health <= 0)
         {
             Death();
@@ -40,13 +38,15 @@ public class playerHealthScript : MonoBehaviour
 
     public void hit()
     {
-        if (notAgain == false) {
-     StartCoroutine(GettingHit());
+        if (!notAgain)
+        {
+            StartCoroutine(GettingHit());
         }
     }
+
     public void rocketHit()
     {
-        if (notAgain == false)
+        if (!notAgain)
         {
             StartCoroutine(rocketHitted());
         }
@@ -58,42 +58,77 @@ public class playerHealthScript : MonoBehaviour
         stunned = true;
         health -= (20f * damageMultiplier);
 
-        float startTime = Time.time;
-        float stunDuration = 2f;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+        // Change the character's opacity
+        SetCharacterOpacity(0.5f);
 
-        while (Time.time < startTime + stunDuration)
-        {
-            damageMultiplier = 0f;
-            yield return null;
-        }
+        // Disable hitbox colliders
+        hitbox.enabled = false;
+        hitbox2.enabled = false;
+
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        damageMultiplier = 0f;
+
+        // Stun duration
+        yield return new WaitForSeconds(1f);
+
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         stunned = false;
 
-        yield return new WaitForSeconds(1);
+        // Enable hitbox colliders
+        hitbox.enabled = true;
+        hitbox2.enabled = true;
+
+        // Reset character opacity after stun duration
+        SetCharacterOpacity(1f);
+
+        yield return new WaitForSeconds(2f);
         notAgain = false;
         damageMultiplier = 1f;
-
     }
+
     IEnumerator rocketHitted()
     {
         notAgain = true;
         stunned = true;
         health -= (5f * damageMultiplier);
-        float startTime = Time.time;
-        float stunDuration = 3f;
+
+        // Change the character's opacity
+        SetCharacterOpacity(0.5f);
+
+        // Disable hitbox colliders
+        hitbox.enabled = false;
+        hitbox2.enabled = false;
+
         rb.constraints = RigidbodyConstraints.FreezeAll;
-        while (Time.time < startTime + stunDuration)
-        {
-            damageMultiplier = 0f;
-            yield return null;
-        }
+        damageMultiplier = 0f;
+
+        // Stun duration
+        yield return new WaitForSeconds(1f);
+
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         stunned = false;
-        yield return new WaitForSeconds(1);
+
+        // Enable hitbox colliders
+        hitbox.enabled = true;
+        hitbox2.enabled = true;
+
+        // Reset character opacity after stun duration
+        SetCharacterOpacity(1f);
+
+        yield return new WaitForSeconds(2f);
         notAgain = false;
         damageMultiplier = 1f;
+    }
 
-
+    // Function to set character opacity
+    void SetCharacterOpacity(float opacity)
+    {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in renderers)
+        {
+            Color color = renderer.material.color;
+            color.a = opacity;
+            renderer.material.color = color;
+        }
     }
 }
