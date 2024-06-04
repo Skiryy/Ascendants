@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Reflection;
 
 public class playerHealthScript : MonoBehaviour
 {
     public float health = 100f;
     private CharacterMover characterMover;
     public TextMeshProUGUI enemyHealthDisplay;
+    //get the 2 images
     public Collider hitbox;
     public Collider hitbox2;
     private Rigidbody rb;
@@ -20,12 +22,17 @@ public class playerHealthScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        //load full heart
     }
 
     void Update()
     {
         enemyHealthDisplay.text = "Player Health: " + health;
-        if (health <= 0)
+        if (health == 50)
+        {
+            //load half image
+        }
+        else if (health <= 0)
         {
             Death();
         }
@@ -56,7 +63,7 @@ public class playerHealthScript : MonoBehaviour
     {
         notAgain = true;
         stunned = true;
-        health -= (20f * damageMultiplier);
+        health -= (100f);
 
         // Change the character's opacity
         SetCharacterOpacity(0.5f);
@@ -90,7 +97,7 @@ public class playerHealthScript : MonoBehaviour
     {
         notAgain = true;
         stunned = true;
-        health -= (5f * damageMultiplier);
+        health -= (50f);
 
         // Change the character's opacity
         SetCharacterOpacity(0.5f);
@@ -113,10 +120,10 @@ public class playerHealthScript : MonoBehaviour
         hitbox2.enabled = true;
 
         // Reset character opacity after stun duration
-        SetCharacterOpacity(1f);
 
         yield return new WaitForSeconds(2f);
         notAgain = false;
+        SetCharacterOpacity(1f);
         damageMultiplier = 1f;
     }
 

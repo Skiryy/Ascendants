@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;   
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI;   
 
 public class elementSelector : MonoBehaviour
 {
@@ -26,7 +26,6 @@ public class elementSelector : MonoBehaviour
         playerWaterAttacks.enabled = false;
         playerAirAttacks.enabled = false;
 
-        // Check if the fireButton is assigned
     }
 
     // Update is called once per frame
@@ -43,6 +42,18 @@ public class elementSelector : MonoBehaviour
             element.SetActive(false);
             characterMover.enabled = true;
             Cursor.visible = false;
+        }
+        if (Input.GetKey(KeyCode.Alpha1)){
+            fireSelected();
+        }
+        if (Input.GetKey(KeyCode.Alpha2)){
+            waterSelected();
+        }
+        if (Input.GetKey(KeyCode.Alpha3)){
+            airSelected();
+        }
+        if (Input.GetKey(KeyCode.Alpha4))   {
+            earthSelected();
         }
     }
 

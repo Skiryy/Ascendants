@@ -49,7 +49,7 @@ public class PlayerWaterAttacks : MonoBehaviour
             //FireAttackInstance.transform.Translate(Vector3.left * direction);
             Destroy(icicleAttadckInstance, 2f);
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         attackStatus = false;
     }
 }

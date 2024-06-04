@@ -85,12 +85,12 @@ public class EnemyAttack : MonoBehaviour
             // Trigger tankJumpLoading animation
             animator.SetTrigger("tankJumpLoading");
             barrel.SetActive(false);
-            yield return new WaitForSeconds(2f); // Delay after the attack is
+            yield return new WaitForSeconds(1.5f); // Delay after the attack is
 
 
             // Vertical rise
             animator.SetTrigger("Hover");
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             float elapsedTime = 0f;
             while (elapsedTime < verticalRiseDuration)
             {
@@ -108,8 +108,8 @@ public class EnemyAttack : MonoBehaviour
 
             // Slam down
             transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-            animator.SetTrigger("tankFall"); ;
-            yield return new WaitForSeconds(2f); // Delay for slam down
+            animator.SetTrigger("tankFall"); 
+            yield return new WaitForSeconds(1f); // Delay for slam down
             animator.SetTrigger("tankIdle");
             barrel.SetActive(true);
             jumpAmount -= 1;
@@ -186,7 +186,7 @@ public class EnemyAttack : MonoBehaviour
     }
     IEnumerator waitAttackCoroutine()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         chooseAttack();
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class iceAttack : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed = 15f;
     private void Start()
     {
     }
