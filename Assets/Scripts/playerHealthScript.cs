@@ -18,10 +18,14 @@ public class playerHealthScript : MonoBehaviour
     public Animator animator;
     public bool stunned;
     public bool notAgain;
+    public GameObject fullHeart;
+    public GameObject halfHeart;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        halfHeart.SetActive(false);
+        fullHeart.SetActive(true);
         //load full heart
     }
 
@@ -30,6 +34,8 @@ public class playerHealthScript : MonoBehaviour
         enemyHealthDisplay.text = "Player Health: " + health;
         if (health == 50)
         {
+            halfHeart.SetActive(true);
+            fullHeart.SetActive(false);
             //load half image
         }
         else if (health <= 0)

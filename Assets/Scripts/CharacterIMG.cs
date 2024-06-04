@@ -23,8 +23,20 @@ public class CharacterIMG : MonoBehaviour
 
     void Update()
     {
+        // Rotate the animator based on the direction
+        RotateAnimator();
+
+        if (characterMover.Running)
+        {
+            animator.SetBool("Running", true);
+        }
+        else
+        {
+            animator.SetBool("Running", false);
+        }
+
         // Fire attack logic
-        if (playerFireAttacks.moveAttackStatus && !prevMoveAttackStatus && !characterMover.characterRotate)
+        if (playerFireAttacks.moveAttackStatus && !prevMoveAttackStatus)
         {
             animator.SetTrigger("fireAttack");
         }
@@ -47,7 +59,7 @@ public class CharacterIMG : MonoBehaviour
         }
 
         // Set idle if all conditions are false
-        if (characterMover.isGrounded && !playerHealthScript.stunned && !playerFireAttacks.moveAttackStatus && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping") && !animator.GetCurrentAnimatorStateInfo(0).IsName("fireAttack"))
+        if (!characterMover.Running && !playerHealthScript.stunned && !playerFireAttacks.moveAttackStatus && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping") && !animator.GetCurrentAnimatorStateInfo(0).IsName("fireAttack"))
         {
             animator.SetTrigger("Idle");
         }
@@ -55,5 +67,19 @@ public class CharacterIMG : MonoBehaviour
         // Update states for the next frame
         prevMoveAttackStatus = playerFireAttacks.moveAttackStatus;
         wasGrounded = characterMover.isGrounded;
+    }
+
+    void RotateAnimator()
+    {
+        if (!characterMover.characterRotate)
+        {
+            // Face right
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else
+        {
+            // Face left
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
     }
 }

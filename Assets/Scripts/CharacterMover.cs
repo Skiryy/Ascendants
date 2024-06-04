@@ -15,6 +15,7 @@ public class CharacterMover : MonoBehaviour
 
     public bool isGrounded;
     private bool isCrouching;
+    public bool Running; // Add this line
 
     void Start()
     {
@@ -24,6 +25,13 @@ public class CharacterMover : MonoBehaviour
 
     void Update()
     {
+        if (Running) {
+            Debug.Log("Running");
+                }
+        else
+        {
+            Debug.Log("Standing still");
+        }
         HandleInput();
     }
 
@@ -66,12 +74,14 @@ public class CharacterMover : MonoBehaviour
             Debug.Log(characterRotate);
         }
     }
+
     void Move()
     {
         // Check if player is attacking, set speed to 0 if true
         if (playerFireAttacks.IsAttacking() || playerEarthAttacks.IsAttacking())
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Running = false; // Add this line
             return;
         }
 
@@ -87,6 +97,9 @@ public class CharacterMover : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity = airMovement;
         }
+
+        // Check horizontal velocity and set Running
+        Running = Mathf.Abs(GetComponent<Rigidbody>().velocity.x) > 0.1f; // Add this line
     }
 
     void Jump()

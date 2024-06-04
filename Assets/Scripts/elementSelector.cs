@@ -14,6 +14,7 @@ public class elementSelector : MonoBehaviour
     public Button fireButton;
     public Button earthButton;
 
+
     void Start()
     {
         playerFireAttacks = GetComponent<PlayerFireAttacks>();
