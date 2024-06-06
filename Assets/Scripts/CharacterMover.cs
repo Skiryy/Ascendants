@@ -25,13 +25,7 @@ public class CharacterMover : MonoBehaviour
 
     void Update()
     {
-        if (Running) {
-            Debug.Log("Running");
-                }
-        else
-        {
-            Debug.Log("Standing still");
-        }
+
         HandleInput();
     }
 

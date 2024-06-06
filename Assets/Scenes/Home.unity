@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d652c6dc2a62ec4597f77bb72156581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fightSelector: {fileID: 873472241}
+  fightSelector: {fileID: 974392248}
 --- !u!1001 &540264069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -661,8 +661,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 19.151236, y: 10.877979, z: 13.815237}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 944326540}
+  m_Children: []
   m_Father: {fileID: 974392249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -734,17 +733,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944326539}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.24}
-  m_LocalScale: {x: 0.03987863, y: 0.24709116, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -17.130894}
+  m_LocalScale: {x: 0.76372504, y: 2.6878526, z: 13.815237}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1155085869}
-  m_Father: {fileID: 873472242}
+  m_Father: {fileID: 974392249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.9, y: -19.1}
+  m_AnchoredPosition: {x: -36.387306, y: -207.76947}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &944326541
@@ -823,7 +822,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -869,6 +868,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 944326540}
   - {fileID: 873472242}
   m_Father: {fileID: 1937255123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
