@@ -26,14 +26,8 @@ public class CharacterIMG : MonoBehaviour
         // Rotate the animator based on the direction
         RotateAnimator();
 
-        if (characterMover.Running)
-        {
-            animator.SetBool("Running", true);
-        }
-        else
-        {
-            animator.SetBool("Running", false);
-        }
+        // Set Running state
+        animator.SetBool("Running", characterMover.Running);
 
         // Fire attack logic
         if (playerFireAttacks.moveAttackStatus && !prevMoveAttackStatus)
@@ -42,14 +36,7 @@ public class CharacterIMG : MonoBehaviour
         }
 
         // Hit logic
-        if (playerHealthScript.stunned)
-        {
-            animator.SetBool("isHit", true);
-        }
-        else
-        {
-            animator.SetBool("isHit", false);
-        }
+        animator.SetBool("isHit", playerHealthScript.stunned);
 
         // Jumping logic
         if (!characterMover.isGrounded && wasGrounded)
@@ -58,11 +45,14 @@ public class CharacterIMG : MonoBehaviour
             isJumpingTriggered = true; // Set the flag to true to indicate jumping animation is triggered
         }
 
-        // Set idle if all conditions are false
-        if (!characterMover.Running && !playerHealthScript.stunned && !playerFireAttacks.moveAttackStatus && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping") && !animator.GetCurrentAnimatorStateInfo(0).IsName("fireAttack"))
-        {
-            animator.SetTrigger("Idle");
-        }
+        // Set Idle state
+        bool isIdle = !characterMover.Running &&
+                      !playerHealthScript.stunned &&
+                      !playerFireAttacks.moveAttackStatus &&
+                      !animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping") &&
+                      !animator.GetCurrentAnimatorStateInfo(0).IsName("fireAttack");
+
+        animator.SetBool("Idle", isIdle);
 
         // Update states for the next frame
         prevMoveAttackStatus = playerFireAttacks.moveAttackStatus;
