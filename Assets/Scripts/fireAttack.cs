@@ -26,5 +26,10 @@ public class FireAttack : MonoBehaviour
             enemyScript EnemyScript = collision.gameObject.GetComponent<enemyScript>();
             EnemyScript.health -= 10f;
         }
+        if (collision.gameObject.layer == 14)
+        {
+            dragonEnemyScript DragonEnemyScript = collision.gameObject.GetComponent<dragonEnemyScript>();
+            DragonEnemyScript.health -= 10f;
+        }
     }
 }
