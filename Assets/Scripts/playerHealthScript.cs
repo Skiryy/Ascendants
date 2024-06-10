@@ -26,7 +26,6 @@ public class playerHealthScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         halfHeart.SetActive(false);
         fullHeart.SetActive(true);
-        //load full heart
     }
 
     void Update()
@@ -36,7 +35,6 @@ public class playerHealthScript : MonoBehaviour
         {
             halfHeart.SetActive(true);
             fullHeart.SetActive(false);
-            //load half image
         }
         else if (health <= 0)
         {
@@ -71,30 +69,25 @@ public class playerHealthScript : MonoBehaviour
         stunned = true;
         health -= (100f);
 
-        // Change the character's opacity
         SetCharacterOpacity(0.5f);
 
-        // Disable hitbox colliders
         hitbox.enabled = false;
         hitbox2.enabled = false;
 
         rb.constraints = RigidbodyConstraints.FreezeAll;
         damageMultiplier = 0f;
 
-        // Stun duration
         yield return new WaitForSeconds(1f);
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         stunned = false;
 
-        // Enable hitbox colliders
         hitbox.enabled = true;
         hitbox2.enabled = true;
 
-        // Reset character opacity after stun duration
-        SetCharacterOpacity(1f);
 
         yield return new WaitForSeconds(2f);
+        SetCharacterOpacity(1f);
         notAgain = false;
         damageMultiplier = 1f;
     }

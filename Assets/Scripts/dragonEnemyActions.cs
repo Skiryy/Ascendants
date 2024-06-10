@@ -57,7 +57,7 @@ public class dragonEnemyActions : MonoBehaviour
     {
         //lightning loading animation.
         yield return new WaitForSeconds(1);
-        int lightningCharges = rand.Next(5, 10);
+        int lightningCharges = rand.Next(10, 20);
         float currentCharges = 0f;
         int newAttack = rand.Next(0, 1);
         if (newAttack == 0)
@@ -66,10 +66,10 @@ public class dragonEnemyActions : MonoBehaviour
             while (currentCharges < lightningCharges)
             {
                 targetPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(1f);
                 Debug.Log("Lightning boltts" + currentCharges);
                 GameObject lightning12 = Instantiate(lightningg, targetPosition, Quaternion.identity);
-                Destroy(lightning12, 0.4f);
+                Destroy(lightning12, 0.2f);
                 currentCharges += 1;
             }
         }
@@ -78,10 +78,10 @@ public class dragonEnemyActions : MonoBehaviour
             while (currentCharges < lightningCharges)
             {
                 targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(1f);
                 Debug.Log("Lightning boltts" + currentCharges);
                 GameObject lightning12 = Instantiate(lightningg, targetPosition, Quaternion.identity);
-                Destroy(lightning12, 0.4f);
+                Destroy(lightning12, 0.2f);
                 currentCharges += 1;
             }
             chooseAttack();
@@ -115,7 +115,7 @@ public class dragonEnemyActions : MonoBehaviour
             GameObject rock = Instantiate(rockPrefab, rockPosition, Quaternion.identity);
             Destroy(rock, 3f);
 
-            yield return new WaitForSeconds(0.3f); 
+            yield return new WaitForSeconds(0.5f); 
         }
         chooseAttack();
     }
@@ -126,18 +126,18 @@ public class dragonEnemyActions : MonoBehaviour
         {
             GameObject rock = Instantiate(rockPrefab, rockPositions[i], Quaternion.identity);
             Destroy(rock, 3f);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.8f);
         }
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         transform.position = leftPosition;
         RotateAnimator(true); // Face left
         for (int i = rockPositions.Length - 1; i >= 0; i--)
         {
             GameObject rock = Instantiate(rockPrefab, rockPositions[i], Quaternion.identity);
             Destroy(rock, 3f);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.8f);
         }
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         transform.position = rightPosition;
         RotateAnimator(false); 
         chooseAttack();

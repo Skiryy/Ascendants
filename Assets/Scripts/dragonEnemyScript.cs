@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class dragonEnemyScript : MonoBehaviour
 {
-    public float health = 100f;
+    public float health = 200f;
     public GameObject barrel;
     public TextMeshProUGUI enemyHealthDisplay;
     public List<Image> fullHeartImages; // List of Image components for the full hearts
@@ -14,6 +15,7 @@ public class dragonEnemyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateHealthDisplay();
 
     }
 
@@ -33,43 +35,83 @@ public class dragonEnemyScript : MonoBehaviour
         enemyHealthDisplay.text = "Enemy Health: " + health;
 
         // Update the heart images based on the health value
-        if (health >= 91)
+        if (health > 190)
+        {
+            ShowFullHearts(20);
+        }
+        else if (health > 180)
+        {
+            ShowFullHearts(19);
+        }
+        else if (health > 170)
+        {
+            ShowFullHearts(18);
+        }
+        else if (health > 160)
+        {
+            ShowFullHearts(17);
+        }
+        else if (health > 150)
+        {
+            ShowFullHearts(16);
+        }
+        else if (health > 140)
+        {
+            ShowFullHearts(15);
+        }
+        else if (health > 130)
+        {
+            ShowFullHearts(14);
+        }
+        else if (health > 120)
+        {
+            ShowFullHearts(13);
+        }
+        else if (health > 110)
+        {
+            ShowFullHearts(12);
+        }
+        else if (health > 100)
+        {
+            ShowFullHearts(11);
+        }
+        else if (health > 90)
         {
             ShowFullHearts(10);
         }
-        else if (health >= 81)
+        else if (health > 80)
         {
             ShowFullHearts(9);
         }
-        else if (health >= 71)
+        else if (health > 70)
         {
             ShowFullHearts(8);
         }
-        else if (health >= 61)
+        else if (health > 60)
         {
             ShowFullHearts(7);
         }
-        else if (health >= 51)
+        else if (health > 50)
         {
             ShowFullHearts(6);
         }
-        else if (health >= 41)
+        else if (health > 40)
         {
             ShowFullHearts(5);
         }
-        else if (health >= 31)
+        else if (health > 30)
         {
             ShowFullHearts(4);
         }
-        else if (health >= 21)
+        else if (health > 20)
         {
             ShowFullHearts(3);
         }
-        else if (health >= 11)
+        else if (health > 10)
         {
             ShowFullHearts(2);
         }
-        else if (health >= 1)
+        else if (health > 0)
         {
             ShowFullHearts(1);
         }
