@@ -53,23 +53,77 @@ public class dragonEnemyActions : MonoBehaviour
             StartCoroutine(lightning());
         }
     }
+    void chooseAttackLightning()
+    {
+        string selectedAttack = attacks[rand.Next(attacks.Count)];
+        Debug.Log("Enemy performs " + selectedAttack);
+        if (selectedAttack == "randRocks")
+        {
+            StartCoroutine(randRocks());
+        }
+        if (selectedAttack == "Fire")
+        {
+            StartCoroutine(fire());
+        }
+        if (selectedAttack == "orderRocks")
+        {
+            StartCoroutine(orderRocks());
+        }
+        if (selectedAttack == "Wait")
+        {
+            StartCoroutine(waitAttackCoroutine());
+        }
+        if (selectedAttack == "Lightning")
+        {
+            StartCoroutine(waitAttackCoroutine());
+        }
+    }
+    void chooseOrderRockAttack()
+    {
+        string selectedAttack = attacks[rand.Next(attacks.Count)];
+        Debug.Log("Enemy performs " + selectedAttack);
+        if (selectedAttack == "randRocks")
+        {
+            StartCoroutine(randRocks());
+        }
+        if (selectedAttack == "Fire")
+        {
+            StartCoroutine(fire());
+        }
+        if (selectedAttack == "orderRocks")
+        {
+            StartCoroutine(lightning());
+        }
+        if (selectedAttack == "Wait")
+        {
+            StartCoroutine(waitAttackCoroutine());
+        }
+        if (selectedAttack == "Lightning")
+        {
+            StartCoroutine(lightning());
+        }
+    }
     IEnumerator lightning()
     {
-        //lightning loading animation.
-        yield return new WaitForSeconds(1);
-        int lightningCharges = rand.Next(10, 20);
+        animator.SetBool("Lightning", true);
+        animator.SetBool("wozardIdle", false);
+        yield return new WaitForSeconds(2);
+        int lightningCharges = rand.Next(1, 5);
         float currentCharges = 0f;
         int newAttack = rand.Next(0, 1);
         if (newAttack == 0)
         {
-            chooseAttack();
+            animator.SetBool("Lightning", false);
+            animator.SetBool("wozardIdle", true);
+            chooseAttackLightning();
             while (currentCharges < lightningCharges)
             {
+                yield return new WaitForSeconds(1f);
                 targetPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
                 yield return new WaitForSeconds(1f);
                 Debug.Log("Lightning boltts" + currentCharges);
                 GameObject lightning12 = Instantiate(lightningg, targetPosition, Quaternion.identity);
-                Destroy(lightning12, 0.2f);
+                Destroy(lightning12, 1f);
                 currentCharges += 1;
             }
         }
@@ -77,12 +131,15 @@ public class dragonEnemyActions : MonoBehaviour
         {
             while (currentCharges < lightningCharges)
             {
+                yield return new WaitForSeconds(1f);
                 targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
                 yield return new WaitForSeconds(1f);
                 Debug.Log("Lightning boltts" + currentCharges);
                 GameObject lightning12 = Instantiate(lightningg, targetPosition, Quaternion.identity);
-                Destroy(lightning12, 0.2f);
+                Destroy(lightning12, 1f);
                 currentCharges += 1;
+                animator.SetBool("Lightning", false);
+                animator.SetBool("wozardIdle", true);
             }
             chooseAttack();
         }
@@ -95,17 +152,21 @@ public class dragonEnemyActions : MonoBehaviour
     }
     IEnumerator fire()
     {
-        //Fire animation
+        animator.SetBool("wozardIdle", false);
+        animator.SetTrigger("FireLoading");
         yield return new WaitForSeconds(2);
+        animator.SetBool("fireActive", true);
         fireee.SetActive(true);
         yield return new WaitForSeconds(3);
+        animator.SetBool("fireActive", false);
+        animator.SetBool("wozardIdle", true);
         fireee.SetActive(false);
         chooseAttack();
         
     }
     IEnumerator randRocks()
     {
-        int numRocks = rand.Next(30, 60); 
+        int numRocks = rand.Next(10, 40); 
 
         for (int i = 0; i < numRocks; i++)
         {
@@ -115,7 +176,7 @@ public class dragonEnemyActions : MonoBehaviour
             GameObject rock = Instantiate(rockPrefab, rockPosition, Quaternion.identity);
             Destroy(rock, 3f);
 
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.3f); 
         }
         chooseAttack();
     }
@@ -126,21 +187,21 @@ public class dragonEnemyActions : MonoBehaviour
         {
             GameObject rock = Instantiate(rockPrefab, rockPositions[i], Quaternion.identity);
             Destroy(rock, 3f);
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(1f);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.3f);
         transform.position = leftPosition;
+        chooseOrderRockAttack();
         RotateAnimator(true); // Face left
         for (int i = rockPositions.Length - 1; i >= 0; i--)
         {
             GameObject rock = Instantiate(rockPrefab, rockPositions[i], Quaternion.identity);
             Destroy(rock, 3f);
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(1f);
         }
         yield return new WaitForSeconds(1);
         transform.position = rightPosition;
         RotateAnimator(false); 
-        chooseAttack();
     }
 
     void RotateAnimator(bool faceLeft)

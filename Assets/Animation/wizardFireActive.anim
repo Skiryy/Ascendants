@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BG
+  m_Name: wizardFireActive
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: 721331278cd0aa44696831e3f6c2d347, type: 3}
+      value: {fileID: 21300000, guid: afb66c31f9ce9e646a9fa21091058b95, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: 17ee2cd15caf4db4f9c33a5749f09730, type: 3}
+    - time: 1.0166667
+      value: {fileID: 21300000, guid: afb66c31f9ce9e646a9fa21091058b95, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,13 +48,15 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 721331278cd0aa44696831e3f6c2d347, type: 3}
+    - {fileID: 21300000, guid: afb66c31f9ce9e646a9fa21091058b95, type: 3}
+    - {fileID: 21300000, guid: 17ee2cd15caf4db4f9c33a5749f09730, type: 3}
+    - {fileID: 21300000, guid: afb66c31f9ce9e646a9fa21091058b95, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.016666668
+    m_StopTime: 1.0333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
