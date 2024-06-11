@@ -11,6 +11,7 @@ public class enemyScript : MonoBehaviour
     public GameObject barrel;
     public TextMeshProUGUI enemyHealthDisplay;
     public List<Image> fullHeartImages; // List of Image components for the full hearts
+    public sceneManager scenes;
 
     // Start is called before the first frame update
     void Start()
@@ -106,7 +107,6 @@ public class enemyScript : MonoBehaviour
     void Death()
     {
         Destroy(gameObject);
-        SceneManager.LoadScene(2);
-
+        scenes.enemeyDeath();
     }
 }

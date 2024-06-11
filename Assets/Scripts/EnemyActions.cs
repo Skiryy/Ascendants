@@ -109,7 +109,7 @@ public class EnemyAttack : MonoBehaviour
             // Slam down
             transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
             animator.SetTrigger("tankFall"); 
-            yield return new WaitForSeconds(1f); // Delay for slam down
+            yield return new WaitForSeconds(3); // Delay for slam down
             animator.SetTrigger("tankIdle");
             barrel.SetActive(true);
             jumpAmount -= 1;

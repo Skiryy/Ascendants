@@ -258,12 +258,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &687453827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8495565631925258927, guid: f288918cc4994a342b0b945f03c494d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1248016766662101400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1132140982 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2900369405192380067, guid: f288918cc4994a342b0b945f03c494d5,
     type: 3}
   m_PrefabInstance: {fileID: 1248016766662101400}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1411874839 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9049312023692370500, guid: 83bf0d7912034e849a7c436cbdc8d8e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 5767356377495839171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98f34afef538be4486479bf093c7b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1480876140 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7217806488650464121, guid: f288918cc4994a342b0b945f03c494d5,
@@ -439,6 +457,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495565631925258927, guid: f288918cc4994a342b0b945f03c494d5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8869888835919638680, guid: f288918cc4994a342b0b945f03c494d5,
         type: 3}
@@ -720,6 +743,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5173544038562629160, guid: 60254bb628664d84baa8bcd22bd96350,
         type: 3}
+      propertyPath: scenes
+      value: 
+      objectReference: {fileID: 1411874839}
+    - target: {fileID: 5173544038562629160, guid: 60254bb628664d84baa8bcd22bd96350,
+        type: 3}
+      propertyPath: victoryScreen
+      value: 
+      objectReference: {fileID: 687453827}
+    - target: {fileID: 5173544038562629160, guid: 60254bb628664d84baa8bcd22bd96350,
+        type: 3}
       propertyPath: enemyHealthDisplay
       value: 
       objectReference: {fileID: 506879041}
@@ -966,6 +999,11 @@ PrefabInstance:
       propertyPath: three
       value: 
       objectReference: {fileID: 1480876142}
+    - target: {fileID: 9049312023692370500, guid: 83bf0d7912034e849a7c436cbdc8d8e5,
+        type: 3}
+      propertyPath: victoryScreen
+      value: 
+      objectReference: {fileID: 687453827}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

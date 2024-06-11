@@ -11,6 +11,8 @@ public class dragonEnemyScript : MonoBehaviour
     public GameObject barrel;
     public TextMeshProUGUI enemyHealthDisplay;
     public List<Image> fullHeartImages; // List of Image components for the full hearts
+    public sceneManager scenes;
+
 
     // Start is called before the first frame update
     void Start()
@@ -147,5 +149,7 @@ public class dragonEnemyScript : MonoBehaviour
     void Death()
     {
         Destroy(gameObject);
+        scenes.enemeyDeath();
     }
 }
+

@@ -294,6 +294,11 @@ PrefabInstance:
       propertyPath: three
       value: 
       objectReference: {fileID: 1143547102}
+    - target: {fileID: 9049312023692370500, guid: 83bf0d7912034e849a7c436cbdc8d8e5,
+        type: 3}
+      propertyPath: victoryScreen
+      value: 
+      objectReference: {fileID: 1174815564}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -510,6 +515,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176322780}
   m_CullTransparentMesh: 1
+--- !u!114 &250149952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9049312023692370500, guid: 83bf0d7912034e849a7c436cbdc8d8e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 136329104}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98f34afef538be4486479bf093c7b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &321941790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,6 +1364,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8495565631925258927, guid: f288918cc4994a342b0b945f03c494d5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1425,6 +1447,12 @@ GameObject:
 --- !u!1 &1143547102 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5730120591491699523, guid: f288918cc4994a342b0b945f03c494d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1143547097}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1174815564 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8495565631925258927, guid: f288918cc4994a342b0b945f03c494d5,
     type: 3}
   m_PrefabInstance: {fileID: 1143547097}
   m_PrefabAsset: {fileID: 0}
@@ -2064,6 +2092,11 @@ PrefabInstance:
       propertyPath: health
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 7507373470474628746, guid: dd46412cca15b824d8187a419d7df4b3,
+        type: 3}
+      propertyPath: scenes
+      value: 
+      objectReference: {fileID: 250149952}
     - target: {fileID: 7507373470474628746, guid: dd46412cca15b824d8187a419d7df4b3,
         type: 3}
       propertyPath: enemyHealthDisplay
