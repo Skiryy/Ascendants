@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/practiceScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/fightOne.unity
-    guid: 249efe5382b19024baba4f1fd262120e
-  - enabled: 1
     path: Assets/Scenes/Home.unity
     guid: 6522ef539cc7a9d4da1f9b77abbf513c
+  - enabled: 1
+    path: Assets/Scenes/fightOne.unity
+    guid: 249efe5382b19024baba4f1fd262120e
   - enabled: 1
     path: Assets/Scenes/fightTwo.unity
     guid: 401a82260c5ebf149bd60dd26b058ec1

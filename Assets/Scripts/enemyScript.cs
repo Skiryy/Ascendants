@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class enemyScript : MonoBehaviour
 {
@@ -105,5 +106,7 @@ public class enemyScript : MonoBehaviour
     void Death()
     {
         Destroy(gameObject);
+        SceneManager.LoadScene(2);
+
     }
 }

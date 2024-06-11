@@ -35,7 +35,7 @@ public class EscapeManager : MonoBehaviour
     }
     public void Quit()
     {
-        // close application
+        Application.Quit();
     }
     public void Settings()
     {
