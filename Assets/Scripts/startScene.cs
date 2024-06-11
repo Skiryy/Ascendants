@@ -29,6 +29,7 @@ public class startScene : MonoBehaviour
         Debug.Log("Start function called!");
         fightSelector.SetActive(true);
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // This function will be called when the player enters a trigger collider
