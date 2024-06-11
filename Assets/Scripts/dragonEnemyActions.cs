@@ -108,7 +108,8 @@ public class dragonEnemyActions : MonoBehaviour
         animator.SetBool("Lightning", true);
         animator.SetBool("wozardIdle", false);
         yield return new WaitForSeconds(2);
-        int lightningCharges = rand.Next(1, 5);
+        // int lightningCharges = rand.Next(1, 5);
+        int lightningCharges = 3;
         float currentCharges = 0f;
         int newAttack = rand.Next(0, 1);
         if (newAttack == 0)
