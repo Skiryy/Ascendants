@@ -10,7 +10,7 @@ public class enemyScript : MonoBehaviour
     public float health = 100f;
     public GameObject barrel;
     public TextMeshProUGUI enemyHealthDisplay;
-    public List<Image> fullHeartImages; // List of Image components for the full hearts
+    public List<Image> fullHeartImages; 
     public sceneManager scenes;
 
     // Start is called before the first frame update

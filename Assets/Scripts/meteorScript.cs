@@ -34,8 +34,9 @@ public class meteorScript : MonoBehaviour
         if (collision.gameObject.layer == 7)
         {
             Debug.Log("test");
-            Destroy(collision.gameObject);
             Destroy(gameObject);
+            earthWall EarthWall = collision.gameObject.GetComponent<earthWall>();
+            EarthWall.increaseHits();
         }
         else if (collision.gameObject.layer == 3)
         {

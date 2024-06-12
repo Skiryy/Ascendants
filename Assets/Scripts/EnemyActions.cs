@@ -21,9 +21,14 @@ public class EnemyAttack : MonoBehaviour
     private bool tankRotation = true;
     private Vector3 leftposition = new Vector3(-12.39f, 0.24f, 0.45f);
     private float damageMultiplier;
+    private BoxCollider hitbox;
+    private BoxCollider hitbox2;
 
     private void Start()
     {
+        BoxCollider[] colliders = GetComponents<BoxCollider>();
+        hitbox = colliders[0];
+        hitbox2 = colliders[1];
         EnemyScript = GetComponent<enemyScript>();
         chooseAttack();
     }
@@ -175,6 +180,16 @@ public class EnemyAttack : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
         chooseAttack();
     }
+    IEnumerator earthWallCoroutine()
+    {
+        hitbox.enabled = false;
+        hitbox2.enabled = false;
+
+        yield return new WaitForSeconds(1.5f);
+        hitbox.enabled = true;
+        hitbox2.enabled = true;
+
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -187,7 +202,10 @@ public class EnemyAttack : MonoBehaviour
         }
         if (collision.gameObject.layer == 7)
         {
-            Destroy(collision.gameObject);
+            earthWall EarthWall = collision.gameObject.GetComponent<earthWall>();
+            EarthWall.increaseHits();
+            Debug.Log(EarthWall.hitstaken);
+            StartCoroutine(earthWallCoroutine());
         }
     }
 }

@@ -17,12 +17,15 @@ public class dragonEnemyActions : MonoBehaviour
     public GameObject fireee;
     private Vector3 targetPosition;
     public GameObject lightningg;
+    private BoxCollider hitbox;
 
     // Define positions where rocks will be instantiated
     public Vector3[] rockPositions = new Vector3[12];
 
     private void Start()
     {
+        BoxCollider[] colliders = GetComponents<BoxCollider>();
+        hitbox = colliders[0];
         transform.position = rightPosition;
         DragonEnemyScript = GetComponent<dragonEnemyScript>();
         RotateAnimator(false); // Face right initially
@@ -109,7 +112,7 @@ public class dragonEnemyActions : MonoBehaviour
         animator.SetBool("wozardIdle", false);
         yield return new WaitForSeconds(2);
         // int lightningCharges = rand.Next(1, 5);
-        int lightningCharges = 3;
+        int lightningCharges = 5;
         float currentCharges = 0f;
         int newAttack = rand.Next(0, 1);
         if (newAttack == 0)
@@ -124,7 +127,7 @@ public class dragonEnemyActions : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 Debug.Log("Lightning boltts" + currentCharges);
                 GameObject lightning12 = Instantiate(lightningg, targetPosition, Quaternion.identity);
-                Destroy(lightning12, 1f);
+                Destroy(lightning12, 2f);
                 currentCharges += 1;
             }
         }
@@ -155,7 +158,7 @@ public class dragonEnemyActions : MonoBehaviour
     {
         animator.SetBool("wozardIdle", false);
         animator.SetTrigger("FireLoading");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         animator.SetBool("fireActive", true);
         fireee.SetActive(true);
         yield return new WaitForSeconds(3);
@@ -167,7 +170,7 @@ public class dragonEnemyActions : MonoBehaviour
     }
     IEnumerator randRocks()
     {
-        int numRocks = rand.Next(10, 40); 
+        int numRocks = rand.Next(20, 40); 
 
         for (int i = 0; i < numRocks; i++)
         {
@@ -177,7 +180,7 @@ public class dragonEnemyActions : MonoBehaviour
             GameObject rock = Instantiate(rockPrefab, rockPosition, Quaternion.identity);
             Destroy(rock, 3f);
 
-            yield return new WaitForSeconds(0.3f); 
+            yield return new WaitForSeconds(0.2f); 
         }
         chooseAttack();
     }
@@ -224,6 +227,14 @@ public class dragonEnemyActions : MonoBehaviour
         chooseAttack();
     }
 
+    IEnumerator earthWallCoroutine()
+    {
+        hitbox.enabled = false;
+        yield return new WaitForSeconds(3);
+        hitbox.enabled = true;
+
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.layer == 3)
@@ -231,10 +242,14 @@ public class dragonEnemyActions : MonoBehaviour
             playerHealthScript PlayerHealthScript = collision.gameObject.GetComponent<playerHealthScript>();
             PlayerHealthScript.hit();
             Debug.Log("Player hit");
+
         }
         if (collision.gameObject.layer == 7)
         {
-            Destroy(collision.gameObject);
+            earthWall EarthWall = collision.gameObject.GetComponent<earthWall>();
+            EarthWall.increaseHits();
+            Debug.Log(EarthWall.hitstaken);
+            StartCoroutine(earthWallCoroutine());
         }
     }
 }

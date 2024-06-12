@@ -1,75 +1,57 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerAirAttacks : MonoBehaviour
 {
     private CharacterMover characterMover; // Reference to the CharacterMover script
+    public GameObject airAttack;
     public bool attackStatus = false;
-    public float distanceToPlayer;
-    public GameObject enemy;
-    public GameObject handsL;
-    public GameObject handsR;
-    public Rigidbody rb;
-    private bool coroutineStarted = false;
+    public bool moveAttackStatus = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
-
-        // Find and store the CharacterMover script component
         characterMover = GetComponent<CharacterMover>();
-        rb = GetComponent<Rigidbody>();
-        handsL.SetActive(false);
-        handsR.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        distanceToPlayer = Vector3.Distance(rb.position, enemy.transform.position);
-        bool rotateValue = characterMover.characterRotate;
-        // Check for left mouse button click (button index 0) and if not currently attacking
-        // Access the characterRotate variable from CharacterMover script
-        if (Input.GetMouseButtonDown(0))
+        // Check for left mouse button being held down (button index 0) and if not currently attacking
+        if (Input.GetMouseButton(0) && !attackStatus)
         {
-            Debug.Log(distanceToPlayer);
-                if (rotateValue == false)
-            {
-                handsL.SetActive(true);
-                StartCoroutine(DeactivateHandsAfterDelay(handsL));
-                if (distanceToPlayer < 5)
-                {
-                    Debug.Log("Attack");    
-                    enemyScript EnemyScript = enemy.GetComponent<enemyScript>();
-                    EnemyScript.health -= 1f;
-                }
-            }
-            else if (rotateValue == true)
-            {
-                {
-                    handsR.SetActive(true);
-                    StartCoroutine(DeactivateHandsAfterDelay(handsR));
-                    if (distanceToPlayer < 5)
-                    {
-                        Debug.Log("Attack");
-                        enemyScript EnemyScript = enemy.GetComponent<enemyScript>();
-                        EnemyScript.health -= 1f;
-                    }
-                }
-            }
+            StartCoroutine(PerformAttack());
+            IsAttacking();
+        }
+    }
+
+    public bool IsAttacking()
+    {
+        return moveAttackStatus;
+    }
+
+    IEnumerator PerformAttack()
+    {
+        attackStatus = true;
+
+        // Perform the attack action
+        bool attackDirection = characterMover.characterRotate;
+        Vector3 playerPosition = transform.position;
+        int direction = (attackDirection) ? 1 : -1;
+        Vector3 offsetPosition = playerPosition + Vector3.right * 0.1f * direction;
+
+        if (!attackDirection)
+        {
+            GameObject airAttackInstance = Instantiate(airAttack, offsetPosition, Quaternion.Euler(0, 270, 0));
+            Destroy(airAttackInstance, 0.2f);
+        }
+        else
+        {
+            GameObject airAttackInstance = Instantiate(airAttack, offsetPosition, Quaternion.Euler(0, 90, 0));
+            Destroy(airAttackInstance, 0.2f);
         }
 
-        IEnumerator DeactivateHandsAfterDelay(GameObject hands)
-        {
-            if (!coroutineStarted)
-            {
-                coroutineStarted = true;
-                yield return new WaitForSeconds(0.5f);
-                hands.SetActive(false);
-                coroutineStarted = false;
-            }
-        }
+        // Wait for 0.5 seconds before allowing the next attack
+        yield return new WaitForSeconds(0.5f);
+        attackStatus = false;
     }
 }

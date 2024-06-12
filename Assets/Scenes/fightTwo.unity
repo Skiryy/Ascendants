@@ -1992,6 +1992,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: DragonEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 496452886007527992, guid: dd46412cca15b824d8187a419d7df4b3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 496452886007527992, guid: dd46412cca15b824d8187a419d7df4b3,
+        type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 813335878040781128, guid: dd46412cca15b824d8187a419d7df4b3,
         type: 3}
       propertyPath: m_IsActive

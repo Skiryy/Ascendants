@@ -33,11 +33,20 @@ public class PlayerEarthAttacks : MonoBehaviour
             // Access the characterRotate variable from CharacterMover script
             bool attackDirection = characterMover.characterRotate;
             Vector3 playerPosition = transform.position;
-            int direction = (attackDirection) ? 1 : -1;
-            Vector3 offsetPosition = playerPosition + Vector3.right * 2f * direction;
+            if (attackDirection)
+            {
+                Vector3 offsetPosition = playerPosition + Vector3.right * 0.5f;
+                StartCoroutine(PerformEarthAttack(offsetPosition, attackDirection));
+
+            }
+            else if (!attackDirection)
+            {
+                Vector3 offsetPosition = playerPosition + Vector3.left * 0.5f;
+                StartCoroutine(PerformEarthAttack(offsetPosition, attackDirection));
+
+            }
 
             // Spawn the earthWall
-            StartCoroutine(PerformEarthAttack(offsetPosition, attackDirection));
 
             // Set the canAttack flag to false, initiating the cooldown
             canAttack = false;
@@ -70,12 +79,19 @@ public class PlayerEarthAttacks : MonoBehaviour
     IEnumerator PerformEarthAttack(Vector3 offsetPosition, bool attackDirection)
     {
         moveAttackStatus = true; // Set moveAttackStatus to true when attacking
-
-        GameObject earthWallInstance = Instantiate(earthWall, offsetPosition, Quaternion.Euler(0, 0, 0));
-        Destroy(earthWallInstance, 5f);
+        if (attackDirection) { 
+        GameObject earthWallInstance = Instantiate(earthWall, offsetPosition, Quaternion.Euler(90, 0, 180));
+        Destroy(earthWallInstance, 20f);
+        }
+        else if (!attackDirection)
+        {
+            GameObject earthWallInstance = Instantiate(earthWall, offsetPosition, Quaternion.Euler(90, 0, 0));
+            Destroy(earthWallInstance, 20f);
+        }
 
         // Wait for 10 seconds before setting moveAttackStatus to false
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
+        //earth bending animation
 
         // Set the moveAttackStatus to false after the delay
         moveAttackStatus = false;

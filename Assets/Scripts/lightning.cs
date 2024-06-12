@@ -1,33 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class lightning : MonoBehaviour
+public class Lightning : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool inABox = false;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.layer == 7)
+        if (other.gameObject.layer == 7) // Check if collided with the box
         {
-            Debug.Log("test");
-            Destroy(collision.gameObject);
+            Debug.Log("in a box");
+            inABox = true;
+            Destroy(gameObject); // Destroy the lightning object when it hits the box
+        }
+        if (other.gameObject.layer == 3) // Check if collided with the player
+        {
+            playerHealthScript PlayerHealthScript = other.gameObject.GetComponent<playerHealthScript>();
+            StartCoroutine(healthCheck(PlayerHealthScript));
+        }
+    }
+    IEnumerator healthCheck(playerHealthScript PlayerHealthScript)
+    {
+        Debug.Log("Started coroutine");
+        yield return new WaitForSeconds(0.1f);
+        if (!inABox) {
+            Debug.Log("not in a box");
+            PlayerHealthScript.rocketHit();
             Destroy(gameObject);
         }
-        if (collision.gameObject.layer == 3)
+        else
         {
-            playerHealthScript PlayerHealthScript = collision.gameObject.GetComponent<playerHealthScript>();
-            PlayerHealthScript.rocketHit();
+            Debug.Log("In a box");
         }
     }
+ 
 }
-
