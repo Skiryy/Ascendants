@@ -27,12 +27,6 @@ public class EnemyAttack : MonoBehaviour
         EnemyScript = GetComponent<enemyScript>();
         chooseAttack();
     }
-
-    void Update()
-    {
-        // Update logic here if needed
-    }
-
     void chooseAttack()
     {
         string selectedAttack = attacks[rand.Next(attacks.Count)];
@@ -48,8 +42,7 @@ public class EnemyAttack : MonoBehaviour
         if (selectedAttack == "Wait")
         {
             waitAttack();
-        }
-        // Implement logic for other attacks (Jump, Dash, Wait) here
+         }
     }
 
     void jumpAttack()
@@ -69,9 +62,9 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator jumpAttackCoroutine()
     {
-        float verticalRiseDuration = 0.3f; // Duration for vertical rise
-        float verticalPauseDuration = 0.3f; // Duration to pause after vertical rise
-        float returnDuration = 3f; // Duration for the return movement
+        float verticalRiseDuration = 0.5f;
+        float verticalPauseDuration = 0.8f;
+        float returnDuration = 3f; 
         float jumpAmount = Random.Range(1, 5);
 
         Vector3 startPosition = transform.position;
@@ -79,16 +72,13 @@ public class EnemyAttack : MonoBehaviour
         {
             Vector3 currentPosition = transform.position;
 
-            // Calculate the position above the player
             Vector3 targetPositionAbovePlayer = new Vector3(player.transform.position.x, 5, player.transform.position.z);
 
-            // Trigger tankJumpLoading animation
             animator.SetTrigger("tankJumpLoading");
             barrel.SetActive(false);
-            yield return new WaitForSeconds(1.5f); // Delay after the attack is
+            yield return new WaitForSeconds(1f);
 
 
-            // Vertical rise
             animator.SetTrigger("Hover");
             yield return new WaitForSeconds(1f);
             float elapsedTime = 0f;
@@ -101,21 +91,18 @@ public class EnemyAttack : MonoBehaviour
             }
 
 
-                
-            // Horizontal pause
+
             yield return new WaitForSeconds(verticalPauseDuration);
 
 
-            // Slam down
             transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
             animator.SetTrigger("tankFall"); 
-            yield return new WaitForSeconds(3); // Delay for slam down
+            yield return new WaitForSeconds(1); 
             animator.SetTrigger("tankIdle");
             barrel.SetActive(true);
             jumpAmount -= 1;
         }
-        // Move back to the starting position gradually
-        Vector3 startPositionSlamDown = transform.position; // The position where the slam down 
+        Vector3 startPositionSlamDown = transform.position; 
         float elapsedTimeReturn = 0f;
         while (elapsedTimeReturn < returnDuration)
         {
@@ -125,7 +112,7 @@ public class EnemyAttack : MonoBehaviour
             yield return null;
         }
 
-        transform.position = startPosition; // Ensure exact position at the end of interpolation
+        transform.position = startPosition; 
 
 
         Debug.Log("Finished");
@@ -134,17 +121,16 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator BarrelMovingCoroutine()
     {
-        float attackDuration = 10f; // Set the attack duration
-        float moveSpeed = 0.8f; // Adjust the speed as needed
-        float fireRate = 0.8f; // Adjust the fire rate as needed
+        float attackDuration = 15f;
+        float moveSpeed = 0.8f; 
+        float fireRate = 0.8f; 
 
-        // Store the start time of the attack
         float startTime = Time.time;
 
         while (Time.time - startTime < attackDuration)
         {
             damageMultiplier = 1f;
-            float randomY = UnityEngine.Random.Range(0.8f, 2.7f); // Adjust as needed
+            float randomY = UnityEngine.Random.Range(0.8f, 2.7f);
             barrel.transform.position = new Vector3(barrel.transform.position.x, randomY, barrel.transform.position.z);
             int direction = (tankRotation) ? 1 : -1;
             Vector3 barrelPosition = barrel.transform.position;
@@ -186,7 +172,7 @@ public class EnemyAttack : MonoBehaviour
     }
     IEnumerator waitAttackCoroutine()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.2f);
         chooseAttack();
     }
 

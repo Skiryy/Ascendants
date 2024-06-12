@@ -11,18 +11,12 @@ public class sceneManager : MonoBehaviour
     public GameObject victoryScreen;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         victoryScreen.SetActive(false);
         StartCoroutine(startScene());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     IEnumerator startScene()
     {
@@ -30,7 +24,6 @@ public class sceneManager : MonoBehaviour
         three.SetActive(true);
         two.SetActive(false);
         one.SetActive(false);
-        //3 seconds image
         Debug.Log("3");
         yield return new WaitForSecondsRealtime(1);
         three.SetActive(false);
@@ -56,10 +49,10 @@ public class sceneManager : MonoBehaviour
     }
     IEnumerator death()
     {
-        Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(1);
+        Time.timeScale = 0.1f;
+        yield return new WaitForSecondsRealtime(3);
         victoryScreen.SetActive(true);
-        yield return new WaitForSecondsRealtime(1);
+        yield return new WaitForSecondsRealtime(5);
         SceneManager.LoadScene(2);
         victoryScreen.SetActive(false);
 

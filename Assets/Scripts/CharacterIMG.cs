@@ -7,26 +7,23 @@ public class CharacterIMG : MonoBehaviour
     private CharacterMover characterMover;
     private playerHealthScript playerHealthScript;
 
-    private bool prevMoveAttackStatus; // Keep track of previous moveAttackStatus
-    private bool isJumpingTriggered; // Flag to track if jumping animation is triggered
-    private bool wasGrounded; // Track grounded state from previous frame
+    private bool prevMoveAttackStatus; 
+    private bool isJumpingTriggered; 
+    private bool wasGrounded; 
 
     void Start()
     {
         characterMover = GetComponent<CharacterMover>();
         playerHealthScript = GetComponent<playerHealthScript>();
         playerFireAttacks = GetComponent<PlayerFireAttacks>();
-        prevMoveAttackStatus = false; // Initialize prevMoveAttackStatus
-        isJumpingTriggered = false; // Initialize jumping animation trigger flag
-        wasGrounded = true; // Assuming character starts grounded
+        prevMoveAttackStatus = false; 
+        isJumpingTriggered = false; 
+        wasGrounded = true; 
     }
 
     void Update()
     {
-        // Rotate the animator based on the direction
         RotateAnimator();
-
-        // Set Running state
         animator.SetBool("Running", characterMover.Running);
 
         // Fire attack logic
@@ -42,10 +39,9 @@ public class CharacterIMG : MonoBehaviour
         if (!characterMover.isGrounded && wasGrounded)
         {
             animator.SetTrigger("Jumping");
-            isJumpingTriggered = true; // Set the flag to true to indicate jumping animation is triggered
+            isJumpingTriggered = true; 
         }
 
-        // Set Idle state
         bool isIdle = !characterMover.Running &&
                       !playerHealthScript.stunned &&
                       !playerFireAttacks.moveAttackStatus &&
@@ -53,22 +49,17 @@ public class CharacterIMG : MonoBehaviour
                       !animator.GetCurrentAnimatorStateInfo(0).IsName("fireAttack");
 
         animator.SetBool("Idle", isIdle);
-
-        // Update states for the next frame
         prevMoveAttackStatus = playerFireAttacks.moveAttackStatus;
         wasGrounded = characterMover.isGrounded;
     }
 
     void RotateAnimator()
     {
-        if (!characterMover.characterRotate)
-        {
-            // Face right
+        if (!characterMover.characterRotate) { 
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            // Face left
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
