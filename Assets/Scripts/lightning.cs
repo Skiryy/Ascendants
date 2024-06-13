@@ -11,6 +11,8 @@ public class Lightning : MonoBehaviour
         {
             Debug.Log("in a box");
             inABox = true;
+            earthWall EarthWall = other.gameObject.GetComponent<earthWall>();
+            EarthWall.increaseHits();
             Destroy(gameObject); // Destroy the lightning object when it hits the box
         }
         if (other.gameObject.layer == 3) // Check if collided with the player
