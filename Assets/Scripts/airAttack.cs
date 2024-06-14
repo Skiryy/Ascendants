@@ -35,5 +35,11 @@ public class airAttack : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.layer == 16)
+        {
+            Debug.Log("whats good");
+            finalEnemyScript FinalEnemyScript = collision.gameObject.GetComponent<finalEnemyScript>();
+            FinalEnemyScript.health -= 2.5f;
+        }
     }
 }

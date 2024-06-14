@@ -35,5 +35,11 @@ public class FireAttack : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.layer == 16)
+        {
+            Debug.Log("whats good");
+            finalEnemyScript FinalEnemyScript = collision.gameObject.GetComponent<finalEnemyScript>();
+            FinalEnemyScript.health -= 10f;
+        }
     }
 }
