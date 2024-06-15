@@ -128,6 +128,10 @@ MonoBehaviour:
   ice: {fileID: 8325822731434061463, guid: 8ba4f2e721f135b4c87cd0ca98cb913c, type: 3}
   firePrefab: {fileID: 5414147673744664075, guid: 82eaa37cd0d8c2546a6cb4372fbf08a7,
     type: 3}
+  rockPrefab: {fileID: 5001940099805051042, guid: 16e69a82d971f0a4fa771d25f6543d4f,
+    type: 3}
+  barrierLeft: {fileID: 0}
+  barrierRight: {fileID: 0}
 --- !u!114 &7684842575000303479
 MonoBehaviour:
   m_ObjectHideFlags: 0

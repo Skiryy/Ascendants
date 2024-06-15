@@ -1886,6 +1886,7 @@ MonoBehaviour:
   airAttack: {fileID: 9066457727134422059, guid: 5fee1e6b13ff697439fcf6e84c9145cf,
     type: 3}
   attackStatus: 0
+  animationstatus: 0
   moveAttackStatus: 0
 --- !u!114 &4454814063076681886
 MonoBehaviour:

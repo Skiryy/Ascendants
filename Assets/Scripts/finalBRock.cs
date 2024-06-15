@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class finalBRock : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject spriteRenderer;
+    public float rotationSpeed = 500f;
+
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (spriteRenderer != null)
+        {
+            float rotationAmount = rotationSpeed * Time.deltaTime;
+            spriteRenderer.transform.Rotate(0, 0, rotationAmount);
+        }
     }
+
     private void OnTriggerEnter(Collider collision)
-    { 
-        // Destroy the fire attack when it collides with something
+    {
         if (collision.gameObject.layer == 7)
         {
-            Debug.Log("test");
             earthWall EarthWall = collision.gameObject.GetComponent<earthWall>();
             EarthWall.increaseHits();
             gameObject.SetActive(false);

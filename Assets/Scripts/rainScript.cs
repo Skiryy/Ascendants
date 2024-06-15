@@ -1,21 +1,19 @@
-// FireAttack.cs
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class finalBEnemyFireAttack : MonoBehaviour
+public class rainScript : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed = 7f;
 
     void Update()
     {
-        // Move the fire attack forward
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+        transform.Translate(Vector3.down * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        Destroy(gameObject);
-        // Destroy the fire attack when it collides with something
+
         if (collision.gameObject.layer == 7)
         {
             Debug.Log("test");
@@ -23,16 +21,16 @@ public class finalBEnemyFireAttack : MonoBehaviour
             earthWall EarthWall = collision.gameObject.GetComponent<earthWall>();
             EarthWall.increaseHits();
         }
-        if (collision.gameObject.layer == 3)
+        else if (collision.gameObject.layer == 3)
         {
             playerHealthScript PlayerHealthScript = collision.gameObject.GetComponent<playerHealthScript>();
-            PlayerHealthScript.hit();
+            PlayerHealthScript.rocketHit();
             Destroy(gameObject);
         }
-        if (collision.gameObject.layer == 6)
+        else if (collision.gameObject.layer == 8)
         {
-            Destroy(collision.gameObject);
             Destroy(gameObject);
+            Debug.Log("hi");
         }
     }
 }

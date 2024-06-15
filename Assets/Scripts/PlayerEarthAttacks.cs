@@ -89,8 +89,7 @@ public class PlayerEarthAttacks : MonoBehaviour
             Destroy(earthWallInstance, 20f);
         }
 
-        // Wait for 10 seconds before setting moveAttackStatus to false
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         //earth bending animation
 
         // Set the moveAttackStatus to false after the delay
