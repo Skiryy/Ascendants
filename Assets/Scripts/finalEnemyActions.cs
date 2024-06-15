@@ -18,12 +18,15 @@ public class finalEnemyActions : MonoBehaviour
     private Vector3 rightposition = new Vector3(7.09f, 1.26f, 0f);
     private Vector3 leftpositionP2 = new Vector3(-17f, 1.26f, 0f);
     private Vector3 rightpositionP2 = new Vector3(14f, 1.26f, 0f);
+    private Vector3 leftpositionP3 = new Vector3(-5.6f, 1.26f, 0f);
+    private Vector3 rightpositionP3 = new Vector3(7.09f, 1.26f, 0f);
     private float damageMultiplier;
     private BoxCollider hitbox;
     public GameObject ice;
     public GameObject firePrefab;
     public GameObject rockPrefab;
     public GameObject rainPrefab;
+    public GameObject rainbowFirePrefab;
 
     public GameObject movingWall1;
     public GameObject movingWall2;
@@ -38,8 +41,12 @@ public class finalEnemyActions : MonoBehaviour
     private Vector3 barrierRP1 = new Vector3(9.91f, 6.41f, -0.45f);
     private Vector3 barrierLP2 = new Vector3(-19.29f, 6.41f, -0.45f);
     private Vector3 barrierRP2 = new Vector3(16.29f, 6.41f, -0.45f);
+    private Vector3 barrierLP3 = new Vector3(-7f, 6.41f, -0.45f);
+    private Vector3 barrierRP3 = new Vector3(9.91f, 6.41f, -0.45f);
     private bool phase2Started;
+    private bool phase3Started;
     float distanceToPlayer;
+    public int phase;
 
 
     private List<Coroutine> activeCoroutines = new List<Coroutine>();
@@ -47,6 +54,7 @@ public class finalEnemyActions : MonoBehaviour
 
     private void Start()
     {
+        phase = 0;
         transform.position = rightposition;
         barrierLeft.transform.position = barrierLP1;
         barrierRight.transform.position = barrierRP1;
@@ -65,6 +73,7 @@ public class finalEnemyActions : MonoBehaviour
         Rotate(enemyRotation);
         if ((FinalEnemyScript.health == 200 || FinalEnemyScript.health == 197.5f || FinalEnemyScript.health == 195 || FinalEnemyScript.health == 192.5f) && !phase2Started)
         {
+            phase = 2;
             phase2Started = true;
             cancelAttacks();
             barrierLeft.transform.position = barrierLP2;
@@ -79,6 +88,27 @@ public class finalEnemyActions : MonoBehaviour
             }
             chooseAttack();
         }
+        else if ((FinalEnemyScript.health == 100 || FinalEnemyScript.health == 97.5f || FinalEnemyScript.health == 95 || FinalEnemyScript.health == 92.5f) && !phase3Started)
+        {
+            phase = 3;
+            phase3Started = true;
+            Time.timeScale = 0.5f;
+            cancelAttacks();
+            barrierLeft.transform.position = barrierLP3;
+            barrierRight.transform.position = barrierRP3;
+            if (enemyRotation == false)
+            {
+                transform.position = rightpositionP3;
+            }
+            else if (enemyRotation == true)
+            {
+                transform.position = rightposition;
+                enemyRotation = false;
+            }
+            player.transform.position = new Vector3(0, 1, 0);
+            chooseAttack();
+        }
+
     }
 
     void cancelAttacks()
@@ -158,9 +188,43 @@ public class finalEnemyActions : MonoBehaviour
                         rockWallAttack();
                     }
         }
+        else if (FinalEnemyScript.health > 0)
+        {
+            string selectedAttack = phaseTwoAttacks[rand.Next(phaseTwoAttacks.Count)];
+            Debug.Log("Enemy performs Phase Three " + selectedAttack);
+            if (selectedAttack == "fireAttack")
+            {
+                phaseThreeFireAttack();
+            }
+            if (selectedAttack == "iceAttack")
+            {
+                PhaseThreeIceAttack();
+            }
+            if (selectedAttack == "rainAttack")
+            {
+                phaseThreeFireAttack();
+            }
+            if (selectedAttack == "rockAttack")
+            {
+                PhaseThreeIceAttack();
+            }
+            if (selectedAttack == "ringAttack")
+            {
+                phaseThreeFireAttack();
+            }
+        }
     }
     //PHASE THREE ATTACKS
-
+    void phaseThreeFireAttack()
+    {
+        Coroutine coroutine = StartCoroutine(fire3Numerator());
+        activeCoroutines.Add(coroutine);
+    }
+    void PhaseThreeIceAttack()
+    {
+        Coroutine coroutine = StartCoroutine(ice3Numerator());
+        activeCoroutines.Add(coroutine);
+    }
 
 
 
@@ -331,24 +395,48 @@ public class finalEnemyActions : MonoBehaviour
             Vector3 offsetPosition = transform.position + Vector3.right * (enemyRotation ? 1f : -1f);
             bool moveLeft = enemyRotation; // Determine the direction based on enemy rotation
 
+            animator.SetTrigger("earthAttack");
+            yield return new WaitForSeconds(0.3f);
+
             GameObject wall1 = Instantiate(movingWall1, offsetPosition, Quaternion.Euler(0, -90, 0));
             wall1.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall1);
+            animator.SetTrigger("Idle");
             yield return new WaitForSeconds(1.0f);
+
+
+
+            animator.SetTrigger("earthAttack");
+            yield return new WaitForSeconds(0.3f);
 
             GameObject wall2 = Instantiate(movingWall2, offsetPosition, Quaternion.Euler(0, -90, 0));
             wall2.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall2);
+            animator.SetTrigger("Idle");
             yield return new WaitForSeconds(0.8f);
+
+
+
+            animator.SetTrigger("earthAttack");
+            yield return new WaitForSeconds(0.3f);
+
 
             GameObject wall3 = Instantiate(movingWall3, offsetPosition, Quaternion.Euler(0, -90, 0));
             wall3.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall3);
+            animator.SetTrigger("Idle");
             yield return new WaitForSeconds(0.6f);
+
+
+
+            animator.SetTrigger("earthAttack");
+            yield return new WaitForSeconds(0.3f);
 
             GameObject wall4 = Instantiate(movingWall4, offsetPosition, Quaternion.Euler(0, -90, 0));
             wall4.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall4);
+            animator.SetTrigger("Idle");
+
         }
         else
         {
@@ -356,25 +444,46 @@ public class finalEnemyActions : MonoBehaviour
             Vector3 offsetPosition = transform.position + Vector3.right * (enemyRotation ? 1f : -1f);
             bool moveLeft = enemyRotation; // Determine the direction based on enemy rotation
 
+            animator.SetTrigger("earthAttack");
+
             GameObject wall1 = Instantiate(movingWall1, offsetPosition, Quaternion.Euler(0, 90, 0));
             wall1.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall1);
+            animator.SetTrigger("Idle");
             yield return new WaitForSeconds(1.0f);
+
+
+
+            animator.SetTrigger("earthAttack");
+            yield return new WaitForSeconds(0.3f);
 
             GameObject wall2 = Instantiate(movingWall2, offsetPosition, Quaternion.Euler(0, 90, 0));
             wall2.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall2);
+            animator.SetTrigger("Idle");
             yield return new WaitForSeconds(0.8f);
+
+
+
+            animator.SetTrigger("earthAttack");
+            yield return new WaitForSeconds(0.3f);
 
             GameObject wall3 = Instantiate(movingWall3, offsetPosition, Quaternion.Euler(0, 90, 0));
             wall3.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall3);
+            animator.SetTrigger("Idle");
             yield return new WaitForSeconds(0.6f);
+
+
+
+            animator.SetTrigger("earthAttack");
+            yield return new WaitForSeconds(0.3f);
 
             GameObject wall4 = Instantiate(movingWall4, offsetPosition, Quaternion.Euler(0, 90, 0));
             wall4.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall4);
-                }
+            animator.SetTrigger("Idle");
+        }
 
         yield return new WaitForSeconds(1f);
 
@@ -438,7 +547,7 @@ public class finalEnemyActions : MonoBehaviour
     IEnumerator fire2Numerator()
     {
         isAttacking = true;
-        int totalAttacks = UnityEngine.Random.Range(1, 4);
+        int totalAttacks = UnityEngine.Random.Range(1, 2);
         int currentAttacks = 0;
 
         while (currentAttacks < totalAttacks)
@@ -470,6 +579,7 @@ public class finalEnemyActions : MonoBehaviour
 
     IEnumerator rockNumerator()
     {
+        animator.SetTrigger("earthAttack");
         isAttacking = true;
         Vector3 playerInitialPosition = player.transform.position;
 
@@ -494,12 +604,105 @@ public class finalEnemyActions : MonoBehaviour
 
         // Ensure the rock reaches the exact end position
         rockInstance.transform.position = endPosition;
-
+        animator.SetTrigger("Idle");
         Destroy(rockInstance, 1f);
         yield return new WaitForSeconds(1f);
     }
+    //P3
 
-    IEnumerator earthWallCoroutine()
+    IEnumerator fire3Numerator()
+    {
+        isAttacking = true;
+
+        int totalAttacks = UnityEngine.Random.Range(1, 5);
+        int currentAttacks = 0;
+
+        while (currentAttacks < totalAttacks)
+        {
+            animator.SetTrigger("fireAttack");
+            yield return new WaitForSecondsRealtime(0.3f);
+            if (enemyRotation == false)
+            {
+
+                float waitTime = UnityEngine.Random.Range(1f, 2f);
+                Vector3 startingPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                Vector3 offsetPosition = startingPosition + Vector3.right * -1f;
+                GameObject fireAttackInstance = Instantiate(rainbowFirePrefab, offsetPosition, Quaternion.Euler(0, -90, 0));
+                activeAttackObjects.Add(fireAttackInstance); // Add to list of active objects
+                Destroy(fireAttackInstance, 5f);
+                animator.SetTrigger("Idle");
+                yield return new WaitForSecondsRealtime(2); // Wait for the attack to be 
+                currentAttacks++;
+
+                currentAttacks++;
+            }
+            else if (enemyRotation == true)
+            {
+                float waitTime = UnityEngine.Random.Range(1f, 2f);
+                Vector3 startingPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                Vector3 offsetPosition = transform.position + Vector3.right * 1f;
+                GameObject fireAttackInstance = Instantiate(rainbowFirePrefab, offsetPosition, Quaternion.Euler(0, 90, 0));
+                activeAttackObjects.Add(fireAttackInstance); // Add to list of active objects
+                Destroy(fireAttackInstance, 5f);
+                animator.SetTrigger("Idle");
+                yield return new WaitForSecondsRealtime(2); // Wait for the attack to be 
+                currentAttacks++;
+            }
+        }
+        isAttacking = false;
+        animator.SetTrigger("Idle");
+        yield return new WaitForSecondsRealtime(2f);
+    }
+
+    IEnumerator ice3Numerator()
+    {
+        isAttacking = true;
+        animator.SetTrigger("airAttack");
+        yield return new WaitForSecondsRealtime(1);
+        animator.SetBool("inAirAttack", true);
+        int totalAttacks = UnityEngine.Random.Range(3, 7);
+        int currentAttacks = 0;
+        while (currentAttacks < totalAttacks)
+        {
+            if (enemyRotation == false)
+            {
+                float waitTime = 1f;
+
+                // Perform the ice attack first
+                Vector3 offsetPosition = transform.position + Vector3.right * -1f;
+                GameObject iceAttackInstance = Instantiate(ice, offsetPosition, Quaternion.Euler(0, -90, 180));
+                activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
+                Destroy(iceAttackInstance, 1f);
+                yield return new WaitForSecondsRealtime(waitTime); // Wait for the attack to be visible
+
+                currentAttacks++;
+                yield return new WaitForSecondsRealtime(0.6f); // Wait before teleporting
+                transform.position = leftpositionP3;    // Teleport to the left position
+                enemyRotation = true;                 // Change the rotation state
+                Rotate(enemyRotation);                // Immediately update the rotation
+            }
+            else if (enemyRotation == true)
+            {
+                float waitTime = UnityEngine.Random.Range(0.8f, 1f);
+
+                // Perform the ice attack first
+                Vector3 offsetPosition = transform.position + Vector3.right * 1f;
+                GameObject iceAttackInstance = Instantiate(ice, offsetPosition, Quaternion.Euler(0, 90, 0));
+                activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
+                Destroy(iceAttackInstance, 1f);
+                yield return new WaitForSecondsRealtime(waitTime); // Wait for the attack to be visible
+
+                currentAttacks++;
+                yield return new WaitForSecondsRealtime(0.6f); // Wait before teleporting
+                transform.position = rightpositionP3;   // Teleport to the right position
+                enemyRotation = false;                // Change the rotation state
+                Rotate(enemyRotation);                // Immediately update the rotation
+            }
+        }
+        isAttacking = false;
+        yield return new WaitForSecondsRealtime(1f);
+    }
+        IEnumerator earthWallCoroutine()
     {
         hitbox.enabled = false;
         yield return new WaitForSeconds(1.5f);

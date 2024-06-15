@@ -4,6 +4,7 @@ public class EscapeManager : MonoBehaviour
 {
     bool escaped = false;
     public GameObject escMenu;
+    public finalEnemyActions FinalEnemyActions;
     private void Start()
     {
         escMenu.SetActive(false);
@@ -24,12 +25,24 @@ public class EscapeManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("DAMN!");
-                Time.timeScale = 1;
-                escaped = false;
-                escMenu.SetActive(false);
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                if (FinalEnemyActions.phase == 3)
+                {
+                    Debug.Log("DAMN!");
+                    Time.timeScale = 0.5f;
+                    escaped = false;
+                    escMenu.SetActive(false);
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+                else
+                {
+                    Debug.Log("DAMN!");
+                    Time.timeScale = 1;
+                    escaped = false;
+                    escMenu.SetActive(false);
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
             }
         }
     }
