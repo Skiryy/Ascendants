@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Reflection;
+using UnityEngine.SceneManagement;
+using JetBrains.Annotations;
 
 public class playerHealthScript : MonoBehaviour
 {
@@ -20,9 +22,11 @@ public class playerHealthScript : MonoBehaviour
     public bool notAgain;
     public GameObject fullHeart;
     public GameObject halfHeart;
+    public GameObject deathScreen;
 
     void Start()
     {
+        health = GameData.playerHealth;
         rb = GetComponent<Rigidbody>();
         halfHeart.SetActive(false);
         fullHeart.SetActive(true);
@@ -44,7 +48,18 @@ public class playerHealthScript : MonoBehaviour
 
     void Death()
     {
+        StartCoroutine(deathScreenNumerator());
         Debug.Log("Dead");
+    }
+    IEnumerator deathScreenNumerator()
+    {
+        Time.timeScale = 0.15f;
+        yield return new WaitForSecondsRealtime(1.5f);
+        deathScreen.SetActive(true);
+        yield return new WaitForSecondsRealtime(5f);
+        Time.timeScale = 1f;
+        GameData.playerHealth = 100f;
+        SceneManager.LoadScene(0);
     }
 
     public void hit()

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,14 +8,14 @@ public class sceneManager : MonoBehaviour
     public GameObject two;
     public GameObject one;
     public GameObject victoryScreen;
-
+    private playerHealthScript playerHealth;
 
     void Start()
     {
         victoryScreen.SetActive(false);
         StartCoroutine(startScene());
+        playerHealth = FindObjectOfType<playerHealthScript>(); // Find the player health script
     }
-
 
     IEnumerator startScene()
     {
@@ -43,20 +42,27 @@ public class sceneManager : MonoBehaviour
         Debug.Log("0");
         yield return null;
     }
+
     public void enemeyDeath()
     {
         StartCoroutine(death());
     }
+
     IEnumerator death()
     {
+        if (playerHealth != null)
+        {
+            GameData.playerHealth = playerHealth.health; // Save the current health
+        }
+
         Scene currentScene = SceneManager.GetActiveScene();
         int sceneIndex = currentScene.buildIndex;
         Time.timeScale = 0.1f;
         yield return new WaitForSecondsRealtime(3);
         victoryScreen.SetActive(true);
         yield return new WaitForSecondsRealtime(5);
+        Time.timeScale = 1f;
         SceneManager.LoadScene(sceneIndex + 1);
         victoryScreen.SetActive(false);
-
     }
 }
