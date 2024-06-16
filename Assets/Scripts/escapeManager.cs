@@ -4,7 +4,7 @@ public class EscapeManager : MonoBehaviour
 {
     bool escaped = false;
     public GameObject escMenu;
-    public finalEnemyActions FinalEnemyActions;
+    public phaseManager PhaseManager;
     private void Start()
     {
         escMenu.SetActive(false);
@@ -25,7 +25,7 @@ public class EscapeManager : MonoBehaviour
             }
             else
             {
-                if (FinalEnemyActions.phase == 3)
+                if (PhaseManager.phase == 3)
                 {
                     Debug.Log("DAMN!");
                     Time.timeScale = 0.5f;

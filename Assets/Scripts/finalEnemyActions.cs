@@ -16,8 +16,8 @@ public class finalEnemyActions : MonoBehaviour
     private bool enemyRotation = false;
     private Vector3 leftposition = new Vector3(-10.24f, 1.26f, 0f);
     private Vector3 rightposition = new Vector3(7.09f, 1.26f, 0f);
-    private Vector3 leftpositionP2 = new Vector3(-17f, 1.26f, 0f);
-    private Vector3 rightpositionP2 = new Vector3(14f, 1.26f, 0f);
+    private Vector3 leftpositionP2 = new Vector3(-13f, 1.26f, 0f);
+    private Vector3 rightpositionP2 = new Vector3(12f, 1.26f, 0f);
     private Vector3 leftpositionP3 = new Vector3(-5.6f, 1.26f, 0f);
     private Vector3 rightpositionP3 = new Vector3(7.09f, 1.26f, 0f);
     private float damageMultiplier;
@@ -35,11 +35,12 @@ public class finalEnemyActions : MonoBehaviour
     public GameObject movingWall4;
 
     private bool isAttacking = false;
+    private bool isTransitioning = false; // Add this line
 
     public GameObject barrierLeft;
     public GameObject barrierRight;
-    private Vector3 barrierLP1 = new Vector3(-12.29f, 6.41f, -0.45f);
-    private Vector3 barrierRP1 = new Vector3(9.91f, 6.41f, -0.45f);
+    private Vector3 barrierLP1 = new Vector3(-15f, 5.13f, 0);
+    private Vector3 barrierRP1 = new Vector3(12.03f, 4.69f, -3f);
     private Vector3 barrierLP2 = new Vector3(-19.29f, 6.41f, -0.45f);
     private Vector3 barrierRP2 = new Vector3(16.29f, 6.41f, -0.45f);
     private Vector3 barrierLP3 = new Vector3(-7f, 6.41f, -0.45f);
@@ -48,6 +49,7 @@ public class finalEnemyActions : MonoBehaviour
     private bool phase3Started;
     float distanceToPlayer;
     public int phase;
+    public phaseManager PhaseManager;
 
 
     private List<Coroutine> activeCoroutines = new List<Coroutine>();
@@ -55,7 +57,8 @@ public class finalEnemyActions : MonoBehaviour
 
     private void Start()
     {
-        phase = 0;
+        PhaseManager.phase1();
+        phase = 1;
         transform.position = rightposition;
         barrierLeft.transform.position = barrierLP1;
         barrierRight.transform.position = barrierRP1;
@@ -76,18 +79,8 @@ public class finalEnemyActions : MonoBehaviour
         {
             phase = 2;
             phase2Started = true;
-            cancelAttacks();
-            barrierLeft.transform.position = barrierLP2;
-            barrierRight.transform.position = barrierRP2;
-            if (enemyRotation == false)
-            {
-                transform.position = rightpositionP2;
-            }
-            else if (enemyRotation == true)
-            {
-                transform.position = leftpositionP2;
-            }
-            chooseAttack();
+            StartCoroutine(Phase2Transition());
+
         }
         else if ((FinalEnemyScript.health == 100 || FinalEnemyScript.health == 97.5f || FinalEnemyScript.health == 95 || FinalEnemyScript.health == 92.5f) && !phase3Started)
         {
@@ -132,21 +125,69 @@ public class finalEnemyActions : MonoBehaviour
         activeAttackObjects.Clear();
         isAttacking = false;
     }
+    IEnumerator Phase2Transition()
+    {
+        isTransitioning = true; // Set transition flag
+        cancelAttacks();
+        animator.SetTrigger("earthAttack");
+        PhaseManager.phase2Transition();
+        yield return new WaitForSeconds(4.5f);
+        PhaseManager.phase2();
+        barrierLeft.transform.position = barrierLP2;
+        barrierRight.transform.position = barrierRP2;
+        if (enemyRotation == false)
+        {
+            transform.position = rightpositionP2;
+        }
+        else if (enemyRotation == true)
+        {
+            transform.position = leftpositionP2;
+        }
+        isTransitioning = false; // Unset transition flag
+        animator.SetTrigger("Idle");
+        chooseAttack();
+    }
+    IEnumerator Phase3Transition()
+    {
+        phase = 3;
+        phase3Started = true;
+        PhaseManager.phase3Transition();
+        yield return new WaitForSeconds(4.3f);
+        PhaseManager.phase3();
+        yield return new WaitForSeconds(3);
+        Time.timeScale = 0.5f;
+        cancelAttacks();
+        barrierLeft.transform.position = barrierLP3;
+        barrierRight.transform.position = barrierRP3;
+        if (enemyRotation == false)
+        {
+            transform.position = rightpositionP3;
+        }
+        else if (enemyRotation == true)
+        {
+            transform.position = rightposition;
+            enemyRotation = false;
+        }
+        player.transform.position = new Vector3(0, 1, 0);
+        chooseAttack();
+    }
 
     IEnumerator AttackRoutine()
     {
         while (true)
         {
-            if (!isAttacking)
+            if (!isAttacking && !isTransitioning) // Check if not attacking and not transitioning
             {
                 chooseAttack();
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSecondsRealtime(1);
         }
     }
 
     void chooseAttack()
     {
+        if (isTransitioning) return; // Exit if transitioning
+
         if (FinalEnemyScript.health > 201)
         {
             string selectedAttack = phaseOneAttacks[rand.Next(phaseOneAttacks.Count)];
@@ -168,26 +209,26 @@ public class finalEnemyActions : MonoBehaviour
         {
             string selectedAttack = phaseTwoAttacks[rand.Next(phaseTwoAttacks.Count)];
             Debug.Log("Enemy performs Phase Two " + selectedAttack);
-                    if (selectedAttack == "fireAttack")
-                    {
-                        phaseTwoFireAttack();
-                    }
-                    if (selectedAttack == "iceAttack")
-                    {
-                        phaseTwoIceAttack();
-                    }
-                    if (selectedAttack == "rainAttack")
-                    {
-                        phaseTwoRainAttack();
-                    }
-                    if (selectedAttack == "rockAttack")
-                    {
-                        phaseTwoRockAttack();
-                    }
-                    if (selectedAttack == "ringAttack")
-                    {
-                        rockWallAttack();
-                    }
+            if (selectedAttack == "fireAttack")
+            {
+                phaseTwoFireAttack();
+            }
+            if (selectedAttack == "iceAttack")
+            {
+                phaseTwoIceAttack();
+            }
+            if (selectedAttack == "rainAttack")
+            {
+                phaseTwoRainAttack();
+            }
+            if (selectedAttack == "rockAttack")
+            {
+                phaseTwoRockAttack();
+            }
+            if (selectedAttack == "ringAttack")
+            {
+                rockWallAttack();
+            }
         }
         else if (FinalEnemyScript.health > 0)
         {
@@ -400,6 +441,7 @@ public class finalEnemyActions : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
 
             GameObject wall1 = Instantiate(movingWall1, offsetPosition, Quaternion.Euler(0, -90, 0));
+            Destroy(wall1, 5f);
             wall1.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall1);
             animator.SetTrigger("Idle");
@@ -411,6 +453,7 @@ public class finalEnemyActions : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
 
             GameObject wall2 = Instantiate(movingWall2, offsetPosition, Quaternion.Euler(0, -90, 0));
+            Destroy(wall2, 5f);
             wall2.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall2);
             animator.SetTrigger("Idle");
@@ -423,6 +466,8 @@ public class finalEnemyActions : MonoBehaviour
 
 
             GameObject wall3 = Instantiate(movingWall3, offsetPosition, Quaternion.Euler(0, -90, 0));
+            Destroy(wall3, 5f);
+
             wall3.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall3);
             animator.SetTrigger("Idle");
@@ -434,6 +479,8 @@ public class finalEnemyActions : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
 
             GameObject wall4 = Instantiate(movingWall4, offsetPosition, Quaternion.Euler(0, -90, 0));
+            Destroy(wall4, 5f);
+
             wall4.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall4);
             animator.SetTrigger("Idle");
@@ -450,6 +497,8 @@ public class finalEnemyActions : MonoBehaviour
             GameObject wall1 = Instantiate(movingWall1, offsetPosition, Quaternion.Euler(0, 90, 0));
             wall1.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall1);
+            Destroy(wall1, 5f);
+
             animator.SetTrigger("Idle");
             yield return new WaitForSeconds(1.0f);
 
@@ -459,6 +508,8 @@ public class finalEnemyActions : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
 
             GameObject wall2 = Instantiate(movingWall2, offsetPosition, Quaternion.Euler(0, 90, 0));
+            Destroy(wall2, 5f);
+
             wall2.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall2);
             animator.SetTrigger("Idle");
@@ -470,6 +521,7 @@ public class finalEnemyActions : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
 
             GameObject wall3 = Instantiate(movingWall3, offsetPosition, Quaternion.Euler(0, 90, 0));
+            Destroy(wall2, 5f);
             wall3.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall3);
             animator.SetTrigger("Idle");
@@ -481,6 +533,7 @@ public class finalEnemyActions : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
 
             GameObject wall4 = Instantiate(movingWall4, offsetPosition, Quaternion.Euler(0, 90, 0));
+            Destroy(wall4, 5f);
             wall4.GetComponent<enemyRockWall>().SetMoveDirection(moveLeft);
             activeAttackObjects.Add(wall4);
             animator.SetTrigger("Idle");
@@ -591,7 +644,7 @@ public class finalEnemyActions : MonoBehaviour
         float duration = 2f;
         float elapsedTime = 0f;
         Vector3 startPosition = rockInstance.transform.position;
-        Vector3 endPosition = new Vector3(playerInitialPosition.x, -5f, playerInitialPosition.z);
+        Vector3 endPosition = new Vector3(playerInitialPosition.x, -10f, playerInitialPosition.z);
         isAttacking = false;
         while (elapsedTime < duration)
         {

@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &68853680 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2017480372772965370, guid: 83bf0d7912034e849a7c436cbdc8d8e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 5767356377495839171}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &192187407
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,12 +282,40 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 5767356377495839171}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 68853680}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d98f34afef538be4486479bf093c7b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1411874841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68853680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22c333f8da4495541b4e9d2dc8a3851f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  background: {fileID: 0}
+  leftBarrierRenderer: {fileID: 0}
+  rightBarrierRenderer: {fileID: 0}
+  floorRenderer: {fileID: 0}
+  floorForwardRenderer: {fileID: 0}
+  leftBarrierP1: {fileID: 0}
+  rightBarrierP1: {fileID: 0}
+  leftBarrierP2: {fileID: 0}
+  rightBarrierP2: {fileID: 0}
+  leftBarrierP3: {fileID: 0}
+  rightBarrierP3: {fileID: 0}
+  floorP1: {fileID: 0}
+  floorP2: {fileID: 0}
+  floorP3: {fileID: 0}
+  Floor: {fileID: 0}
 --- !u!1 &1480876140 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7217806488650464121, guid: f288918cc4994a342b0b945f03c494d5,
@@ -393,6 +427,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7219082039706431278, guid: f288918cc4994a342b0b945f03c494d5,
+        type: 3}
+      propertyPath: PhaseManager
+      value: 
+      objectReference: {fileID: 1411874841}
     - target: {fileID: 7895477600436606748, guid: f288918cc4994a342b0b945f03c494d5,
         type: 3}
       propertyPath: m_IsActive
@@ -1007,7 +1046,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2017480372772965370, guid: 83bf0d7912034e849a7c436cbdc8d8e5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1411874841}
   m_SourcePrefab: {fileID: 100100000, guid: 83bf0d7912034e849a7c436cbdc8d8e5, type: 3}
 --- !u!1001 &8726587088258124027
 PrefabInstance:
