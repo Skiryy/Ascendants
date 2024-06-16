@@ -826,6 +826,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7219082039706431278, guid: f288918cc4994a342b0b945f03c494d5,
+        type: 3}
+      propertyPath: FinalEnemyActions
+      value: 
+      objectReference: {fileID: 1424021858}
     - target: {fileID: 7895477600436606748, guid: f288918cc4994a342b0b945f03c494d5,
         type: 3}
       propertyPath: m_IsActive
@@ -1556,6 +1561,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357037782}
   m_CullTransparentMesh: 1
+--- !u!114 &1424021858 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4954783130332347921, guid: 45df7bc643e52ec45919d871636741ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 9203957068680224366}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c837790ebf8fe4896b5dcbfaf9ce93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1513516305
 GameObject:
   m_ObjectHideFlags: 0
@@ -3208,6 +3225,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: finalBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 4954783130332347921, guid: 45df7bc643e52ec45919d871636741ba,
+        type: 3}
+      propertyPath: ice2
+      value: 
+      objectReference: {fileID: 8325822731434061463, guid: b8ac8789071dba14eaefaf2133f63824,
+        type: 3}
     - target: {fileID: 4954783130332347921, guid: 45df7bc643e52ec45919d871636741ba,
         type: 3}
       propertyPath: player

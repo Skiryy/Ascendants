@@ -27,6 +27,7 @@ public class finalEnemyActions : MonoBehaviour
     public GameObject rockPrefab;
     public GameObject rainPrefab;
     public GameObject rainbowFirePrefab;
+    public GameObject ice2;
 
     public GameObject movingWall1;
     public GameObject movingWall2;
@@ -651,14 +652,14 @@ public class finalEnemyActions : MonoBehaviour
         }
         isAttacking = false;
         animator.SetTrigger("Idle");
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(1f);
     }
 
     IEnumerator ice3Numerator()
     {
         isAttacking = true;
         animator.SetTrigger("airAttack");
-        yield return new WaitForSecondsRealtime(1);
+        yield return new WaitForSecondsRealtime(0.5f);
         animator.SetBool("inAirAttack", true);
         int totalAttacks = UnityEngine.Random.Range(3, 7);
         int currentAttacks = 0;
@@ -670,10 +671,10 @@ public class finalEnemyActions : MonoBehaviour
 
                 // Perform the ice attack first
                 Vector3 offsetPosition = transform.position + Vector3.right * -1f;
-                GameObject iceAttackInstance = Instantiate(ice, offsetPosition, Quaternion.Euler(0, -90, 180));
+                GameObject iceAttackInstance = Instantiate(ice2, offsetPosition, Quaternion.Euler(0, -90, 180));
                 activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
                 Destroy(iceAttackInstance, 1f);
-                yield return new WaitForSecondsRealtime(waitTime); // Wait for the attack to be visible
+                yield return new WaitForSecondsRealtime(0.5f); // Wait for the attack to be visible
 
                 currentAttacks++;
                 yield return new WaitForSecondsRealtime(0.6f); // Wait before teleporting
@@ -687,10 +688,10 @@ public class finalEnemyActions : MonoBehaviour
 
                 // Perform the ice attack first
                 Vector3 offsetPosition = transform.position + Vector3.right * 1f;
-                GameObject iceAttackInstance = Instantiate(ice, offsetPosition, Quaternion.Euler(0, 90, 0));
+                GameObject iceAttackInstance = Instantiate(ice2, offsetPosition, Quaternion.Euler(0, 90, 0));
                 activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
                 Destroy(iceAttackInstance, 1f);
-                yield return new WaitForSecondsRealtime(waitTime); // Wait for the attack to be visible
+                yield return new WaitForSecondsRealtime(0.5f); // Wait for the attack to be visible
 
                 currentAttacks++;
                 yield return new WaitForSecondsRealtime(0.6f); // Wait before teleporting
@@ -700,7 +701,7 @@ public class finalEnemyActions : MonoBehaviour
             }
         }
         isAttacking = false;
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.5f);
     }
         IEnumerator earthWallCoroutine()
     {
