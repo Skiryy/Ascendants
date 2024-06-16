@@ -1,65 +1,80 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 public class startScene : MonoBehaviour
 {
     private bool isPlayerInStartZone = false;
+    private bool isPlayerInTutorialZone = false;
     public GameObject fightSelector;
-    
+    public GameObject tutorial;
+
     void Start()
     {
         Cursor.visible = false;
-
-        fightSelector.SetActive(false); 
+        fightSelector.SetActive(false);
+        tutorial.SetActive(false);
     }
-    // Update is called once per frame
+
     void Update()
     {
-
         if (isPlayerInStartZone && Input.GetKeyDown(KeyCode.E))
         {
             StartFunction();
         }
+        if (isPlayerInTutorialZone)
+        {
+            tutorialFunction();
+        }
     }
-
 
     void StartFunction()
     {
-        // Call the desired function
         Debug.Log("Start function called!");
         fightSelector.SetActive(true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
-    // This function will be called when the player enters a trigger collider
+    void tutorialFunction()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            tutorial.SetActive(false); 
+        }
+        else
+        {
+            tutorial.SetActive(true); 
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the collider is on the "Start" layer
         if (other.gameObject.layer == LayerMask.NameToLayer("Start"))
         {
             isPlayerInStartZone = true;
         }
+        if (other.gameObject.layer == LayerMask.NameToLayer("Tutorial"))
+        {
+            isPlayerInTutorialZone = true;
+        }
     }
 
-    // This function will be called when the player exits a trigger collider
     private void OnTriggerExit(Collider other)
     {
-        // Check if the collider is on the "Start" layer
         if (other.gameObject.layer == LayerMask.NameToLayer("Start"))
         {
             isPlayerInStartZone = false;
         }
+        if (other.gameObject.layer == LayerMask.NameToLayer("Tutorial"))
+        {
+            isPlayerInTutorialZone = false;
+            tutorial.SetActive(false); 
+        }
     }
+
     public void tankFight()
     {
         SceneManager.LoadScene(1);
         Debug.Log("Hell yeah");
     }
-
-
-
-
 }
-
-
