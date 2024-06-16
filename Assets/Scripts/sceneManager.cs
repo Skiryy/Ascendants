@@ -44,16 +44,18 @@ public class sceneManager : MonoBehaviour
         yield return null;
     }
     public void enemeyDeath()
-    { 
+    {
         StartCoroutine(death());
     }
     IEnumerator death()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        int sceneIndex = currentScene.buildIndex;
         Time.timeScale = 0.1f;
         yield return new WaitForSecondsRealtime(3);
         victoryScreen.SetActive(true);
         yield return new WaitForSecondsRealtime(5);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(sceneIndex + 1);
         victoryScreen.SetActive(false);
 
     }

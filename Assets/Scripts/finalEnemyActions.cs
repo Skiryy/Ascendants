@@ -86,21 +86,7 @@ public class finalEnemyActions : MonoBehaviour
         {
             phase = 3;
             phase3Started = true;
-            Time.timeScale = 0.5f;
-            cancelAttacks();
-            barrierLeft.transform.position = barrierLP3;
-            barrierRight.transform.position = barrierRP3;
-            if (enemyRotation == false)
-            {
-                transform.position = rightpositionP3;
-            }
-            else if (enemyRotation == true)
-            {
-                transform.position = rightposition;
-                enemyRotation = false;
-            }
-            player.transform.position = new Vector3(0, 1, 0);
-            chooseAttack();
+            StartCoroutine(Phase3Transition());
         }
 
     }
@@ -127,7 +113,7 @@ public class finalEnemyActions : MonoBehaviour
     }
     IEnumerator Phase2Transition()
     {
-        isTransitioning = true; // Set transition flag
+        isTransitioning = true; 
         cancelAttacks();
         animator.SetTrigger("earthAttack");
         PhaseManager.phase2Transition();
@@ -143,22 +129,20 @@ public class finalEnemyActions : MonoBehaviour
         {
             transform.position = leftpositionP2;
         }
-        isTransitioning = false; // Unset transition flag
+        isTransitioning = false; 
         animator.SetTrigger("Idle");
         chooseAttack();
     }
     IEnumerator Phase3Transition()
     {
-        phase = 3;
-        phase3Started = true;
-        PhaseManager.phase3Transition();
-        yield return new WaitForSeconds(4.3f);
-        PhaseManager.phase3();
-        yield return new WaitForSeconds(3);
-        Time.timeScale = 0.5f;
+        isTransitioning = true;
         cancelAttacks();
-        barrierLeft.transform.position = barrierLP3;
-        barrierRight.transform.position = barrierRP3;
+        PhaseManager.phase3Transition();
+        animator.SetTrigger("timeChange");
+        yield return new WaitForSeconds(3f);
+        PhaseManager.phase3();
+        animator.SetTrigger("Idle");
+        Time.timeScale = 0.5f;
         if (enemyRotation == false)
         {
             transform.position = rightpositionP3;
@@ -168,6 +152,11 @@ public class finalEnemyActions : MonoBehaviour
             transform.position = rightposition;
             enemyRotation = false;
         }
+        barrierLeft.transform.position = barrierLP3;
+        barrierRight.transform.position = barrierRP3;
+        yield return new WaitForSecondsRealtime(2);
+        isTransitioning = false;
+        animator.SetTrigger("Idle");
         player.transform.position = new Vector3(0, 1, 0);
         chooseAttack();
     }

@@ -6,6 +6,7 @@ public class phaseManager : MonoBehaviour
 {
     public int phase;
     public Animator background;
+    public Animator enemyAnimator;
     public SpriteRenderer leftBarrierRenderer;
     public SpriteRenderer rightBarrierRenderer;
     public SpriteRenderer floorRenderer;
@@ -22,6 +23,7 @@ public class phaseManager : MonoBehaviour
     public GameObject Floor;
     public GameObject bg;
     public GameObject FloorForward;
+    public GameObject starryBG;
 
 
 
@@ -58,17 +60,19 @@ public class phaseManager : MonoBehaviour
     }
     public void phase3Transition()
     {
-       // background.SetTrigger("P3Transition");
-        Debug.Log("Background Phase = P2Transition");
-        floorRenderer.sprite = floorP3;
+        leftBarrierRenderer.enabled = false;
+        rightBarrierRenderer.enabled = false;
+        starryBG.SetActive(true);
+        background.SetTrigger("P3");
+        Debug.Log("Background Phase = P3Transition");
+        floorRenderer.enabled = false;
+        FloorForward.SetActive(false);
+
 
     }
     public void phase3()
     {
         background.SetTrigger("P3");
-        Debug.Log("Background Phase = P3");
-        leftBarrierRenderer.sprite = leftBarrierP3;
-        rightBarrierRenderer.sprite = rightBarrierP3;
         phase = 3;
     }
 }
