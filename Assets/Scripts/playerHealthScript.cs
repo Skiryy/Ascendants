@@ -59,7 +59,7 @@ public class playerHealthScript : MonoBehaviour
         yield return new WaitForSecondsRealtime(5f);
         Time.timeScale = 1f;
         GameData.playerHealth = 100f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void hit()

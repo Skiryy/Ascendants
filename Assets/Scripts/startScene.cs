@@ -74,7 +74,7 @@ public class startScene : MonoBehaviour
 
     public void tankFight()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
         Debug.Log("Hell yeah");
     }
 }
