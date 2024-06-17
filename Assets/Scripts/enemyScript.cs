@@ -31,10 +31,8 @@ public class enemyScript : MonoBehaviour
 
     void UpdateHealthDisplay()
     {
-        // Update the health text display
         enemyHealthDisplay.text = "Enemy Health: " + health;
 
-        // Update the heart images based on the health value
         if (health >= 91)
         {
             ShowFullHearts(10);

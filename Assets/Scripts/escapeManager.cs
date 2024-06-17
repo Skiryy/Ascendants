@@ -9,7 +9,6 @@ public class EscapeManager : MonoBehaviour
     {
         escMenu.SetActive(false);
     }
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

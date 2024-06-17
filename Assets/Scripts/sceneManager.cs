@@ -14,7 +14,7 @@ public class sceneManager : MonoBehaviour
     {
         victoryScreen.SetActive(false);
         StartCoroutine(startScene());
-        playerHealth = FindObjectOfType<playerHealthScript>(); // Find the player health script
+        playerHealth = FindObjectOfType<playerHealthScript>(); 
     }
 
     IEnumerator startScene()
@@ -52,7 +52,7 @@ public class sceneManager : MonoBehaviour
     {
         if (playerHealth != null)
         {
-            GameData.playerHealth = playerHealth.health; // Save the current health
+            GameData.playerHealth = playerHealth.health;
         }
 
         Scene currentScene = SceneManager.GetActiveScene();

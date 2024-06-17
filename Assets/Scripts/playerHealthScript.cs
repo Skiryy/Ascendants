@@ -113,27 +113,22 @@ public class playerHealthScript : MonoBehaviour
         stunned = true;
         health -= (50f);
 
-        // Change the character's opacity
         SetCharacterOpacity(0.5f);
 
-        // Disable hitbox colliders
         hitbox.enabled = false;
         hitbox2.enabled = false;
 
         rb.constraints = RigidbodyConstraints.FreezeAll;
         damageMultiplier = 0f;
 
-        // Stun duration
         yield return new WaitForSeconds(1f);
 
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         stunned = false;
 
-        // Enable hitbox colliders
         hitbox.enabled = true;
         hitbox2.enabled = true;
 
-        // Reset character opacity after stun duration
 
         yield return new WaitForSeconds(2f);
         notAgain = false;
@@ -141,7 +136,6 @@ public class playerHealthScript : MonoBehaviour
         damageMultiplier = 1f;
     }
 
-    // Function to set character opacity
     void SetCharacterOpacity(float opacity)
     {
         Renderer[] renderers = GetComponentsInChildren<Renderer>();

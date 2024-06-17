@@ -16,10 +16,8 @@ public class SideFollowCamera : MonoBehaviour
             return;
         }
 
-        // Calculate the target position with the offset
         Vector3 targetPosition = target.position + offset;
 
-        // Smoothly move the camera towards the target position
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 }

@@ -8,7 +8,7 @@ public class finalEnemyScript : MonoBehaviour
 {
     public float health = 300f;
     public TextMeshProUGUI enemyHealthDisplay;
-    public List<Image> fullHeartImages; // List of Image components for the full hearts
+    public List<Image> fullHeartImages; 
     public sceneManager scenes;
 
     // Start is called before the first frame update
@@ -29,10 +29,8 @@ public class finalEnemyScript : MonoBehaviour
 
     void UpdateHealthDisplay()
     {
-        // Update the health text display
         enemyHealthDisplay.text = "Enemy Health: " + health;
 
-        // Update the heart images based on the health value
         if (health > 290)
         {
             ShowFullHearts(30);

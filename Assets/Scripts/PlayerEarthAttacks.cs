@@ -3,19 +3,18 @@ using UnityEngine;
 
 public class PlayerEarthAttacks : MonoBehaviour
 {
-    private CharacterMover characterMover; // Reference to the CharacterMover script
+    private CharacterMover characterMover; 
     public GameObject earthWall;
     public bool attackStatus = false;
     public bool moveAttackStatus = true;
     public bool isGrounded;
-    private bool canAttack = true; // Flag to control attack cooldown
+    private bool canAttack = true; 
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
 
-        // Find and store the CharacterMover script component
         characterMover = GetComponent<CharacterMover>();
     }
 
@@ -27,10 +26,8 @@ public class PlayerEarthAttacks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check for left mouse button click (button index 0), if not currently attacking, and if the attack cooldown has passed
         if (Input.GetMouseButtonDown(0) && isGrounded && !IsAttacking() && canAttack)
         {
-            // Access the characterRotate variable from CharacterMover script
             bool attackDirection = characterMover.characterRotate;
             Vector3 playerPosition = transform.position;
             if (attackDirection)
@@ -46,12 +43,9 @@ public class PlayerEarthAttacks : MonoBehaviour
 
             }
 
-            // Spawn the earthWall
 
-            // Set the canAttack flag to false, initiating the cooldown
             canAttack = false;
 
-            // Use Invoke to set canAttack to true after 10 seconds
             StartCoroutine(ResetAttackCooldown());
         }
     }
@@ -68,17 +62,15 @@ public class PlayerEarthAttacks : MonoBehaviour
         }
     }
 
-    // Method to reset the canAttack flag after the cooldown period
     IEnumerator ResetAttackCooldown()
     {
         yield return new WaitForSeconds(10f);
         canAttack = true;
     }
 
-    // Coroutine for the Earth Attack
     IEnumerator PerformEarthAttack(Vector3 offsetPosition, bool attackDirection)
     {
-        moveAttackStatus = true; // Set moveAttackStatus to true when attacking
+        moveAttackStatus = true; 
         if (attackDirection) { 
         GameObject earthWallInstance = Instantiate(earthWall, offsetPosition, Quaternion.Euler(90, 0, 180));
         Destroy(earthWallInstance, 20f);
@@ -90,13 +82,10 @@ public class PlayerEarthAttacks : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.5f);
-        //earth bending animation
 
-        // Set the moveAttackStatus to false after the delay
         moveAttackStatus = false;
     }
 
-    // Method to check if the player is currently attacking
     public bool IsAttacking()
     {
         return moveAttackStatus;

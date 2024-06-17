@@ -7,7 +7,7 @@ public class dragonEnemyActions : MonoBehaviour
 {
     public Animator animator;
     private dragonEnemyScript DragonEnemyScript;
-    public GameObject rockPrefab; // Changed bullet to rockPrefab for clarity
+    public GameObject rockPrefab; 
     public GameObject player;
     private System.Random rand = new System.Random();
     private List<string> attacks = new List<string> { "randRocks", "Fire", "orderRocks", "Wait", "Lightning" };
@@ -19,7 +19,6 @@ public class dragonEnemyActions : MonoBehaviour
     public GameObject lightningg;
     private BoxCollider hitbox;
 
-    // Define positions where rocks will be instantiated
     public Vector3[] rockPositions = new Vector3[12];
 
     private void Start()
@@ -28,7 +27,7 @@ public class dragonEnemyActions : MonoBehaviour
         hitbox = colliders[0];
         transform.position = rightPosition;
         DragonEnemyScript = GetComponent<dragonEnemyScript>();
-        RotateAnimator(false); // Face right initially
+        RotateAnimator(false); 
         chooseAttack();
     }
     void chooseAttack()

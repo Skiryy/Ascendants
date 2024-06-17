@@ -5,7 +5,6 @@ public class enemyRockWall : MonoBehaviour
     public float speed = 5f;
     private bool moveLeft;
 
-    // Function to set the movement direction
     public void SetMoveDirection(bool isMovingLeft)
     {
         moveLeft = isMovingLeft;
@@ -19,7 +18,6 @@ public class enemyRockWall : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        // Destroy the rock wall when it collides with something
         if (collision.gameObject.layer == 7)
         {
             earthWall EarthWall = collision.gameObject.GetComponent<earthWall>();

@@ -10,7 +10,7 @@ public class CharacterIMG : MonoBehaviour
     private playerHealthScript playerHealthScript;
 
     private bool prevMoveAttackStatus;
-    private bool prevAirAttackStatus; // New variable to track previous air attack status
+    private bool prevAirAttackStatus; 
     private bool isJumpingTriggered;
     private bool wasGrounded;
 
@@ -21,7 +21,7 @@ public class CharacterIMG : MonoBehaviour
         playerFireAttacks = GetComponent<PlayerFireAttacks>();
         playerAirAttacks = GetComponent<PlayerAirAttacks>();
         prevMoveAttackStatus = false;
-        prevAirAttackStatus = false; // Initialize the new variable
+        prevAirAttackStatus = false; 
         isJumpingTriggered = false;
         wasGrounded = true;
     }
@@ -31,27 +31,22 @@ public class CharacterIMG : MonoBehaviour
         RotateAnimator();
         animator.SetBool("Running", characterMover.Running);
 
-        // Fire attack logic
         if (playerFireAttacks.moveAttackStatus && !prevMoveAttackStatus)
         {
             animator.SetTrigger("fireAttack");
         }
 
-        // Air attack logic (ensuring animation is triggered only once per attack)
         if (playerAirAttacks.moveAttackStatus && !prevAirAttackStatus)
         {
             Debug.Log("Setting airAttack trigger");
             animator.SetTrigger("airAttack");
         }
 
-        // Update previous attack statuses
         prevMoveAttackStatus = playerFireAttacks.moveAttackStatus;
         prevAirAttackStatus = playerAirAttacks.moveAttackStatus;
 
-        // Hit logic
         animator.SetBool("isHit", playerHealthScript.stunned);
 
-        // Jumping logic
         if (!characterMover.isGrounded && wasGrounded)
         {
             animator.SetTrigger("Jumping");

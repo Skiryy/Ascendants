@@ -29,7 +29,6 @@ public class elementSelector : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.Tab))
@@ -76,12 +75,10 @@ public class elementSelector : MonoBehaviour
         playerFireAttacks.enabled = false;
         playerAirAttacks.enabled = false;
         characterMover.jumpForce = 7f;
-        // Implement waterSelected logic if needed
     }
 
     public void airSelected()
     {
-        // Implement airSelected logic if needed
         Debug.Log("Selected Air");
         playerEarthAttacks.enabled = false;
         playerFireAttacks.enabled = false;
@@ -92,7 +89,6 @@ public class elementSelector : MonoBehaviour
 
     public void earthSelected()
     {
-        // Implement earthSelected logic if needed
         Debug.Log("Selected Earth");
         playerEarthAttacks.enabled = true;
         playerFireAttacks.enabled = false;

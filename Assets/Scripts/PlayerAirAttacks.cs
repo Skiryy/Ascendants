@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerAirAttacks : MonoBehaviour
 {
-    private CharacterMover characterMover; // Reference to the CharacterMover script
+    private CharacterMover characterMover; 
     public GameObject airAttack;
     public bool attackStatus = false;
     public bool animationstatus;
@@ -17,7 +17,6 @@ public class PlayerAirAttacks : MonoBehaviour
 
     void Update()
     {
-        // Check for left mouse button being held down (button index 0) and if not currently attacking
         if (Input.GetMouseButton(0) && !attackStatus)
         {
             StartCoroutine(PerformAttack());
@@ -51,7 +50,6 @@ public class PlayerAirAttacks : MonoBehaviour
             GameObject airAttackInstance = Instantiate(airAttack, offsetPosition, Quaternion.Euler(0, 90, 0));
             Destroy(airAttackInstance, 1f);
         }
-        // Wait for 0.5 seconds before allowing the next attack
         yield return new WaitForSeconds(0.5f);
         moveAttackStatus = false;
         attackStatus = false;

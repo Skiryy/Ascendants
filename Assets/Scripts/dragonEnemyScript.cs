@@ -10,7 +10,7 @@ public class dragonEnemyScript : MonoBehaviour
     public float health = 200f;
     public GameObject barrel;
     public TextMeshProUGUI enemyHealthDisplay;
-    public List<Image> fullHeartImages; // List of Image components for the full hearts
+    public List<Image> fullHeartImages; 
     public sceneManager scenes;
 
 
@@ -33,10 +33,8 @@ public class dragonEnemyScript : MonoBehaviour
 
     void UpdateHealthDisplay()
     {
-        // Update the health text display
         enemyHealthDisplay.text = "Enemy Health: " + health;
 
-        // Update the heart images based on the health value
         if (health > 190)
         {
             ShowFullHearts(20);

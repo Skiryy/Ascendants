@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerWaterAttacks : MonoBehaviour
 {
-    private CharacterMover characterMover; // Reference to the CharacterMover script
+    private CharacterMover characterMover; 
     public GameObject icicle;
     public bool attackStatus = false;
     // Start is called before the first frame update
@@ -11,19 +11,15 @@ public class PlayerWaterAttacks : MonoBehaviour
     {
         Cursor.visible = false;
 
-        // Find and store the CharacterMover script component
         characterMover = GetComponent<CharacterMover>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check for left mouse button click (button index 0) and if not currently attacking
         if (Input.GetMouseButtonDown(0) && !attackStatus)
         {
-            // Access the characterRotate variable from CharacterMover script
             bool rotateValue = characterMover.characterRotate;
-            // Execute attack action
             StartCoroutine(PerformAttack());        }
     }
 
@@ -31,7 +27,6 @@ public class PlayerWaterAttacks : MonoBehaviour
     {
         attackStatus = true;
 
-        // Implement a delay of 2 seconds before allowing another attack
         bool attackDirection = characterMover.characterRotate;
         Vector3 playerPosition = transform.position;
         int direction = (attackDirection) ? 1 : -1;

@@ -15,7 +15,7 @@ public class CharacterMover : MonoBehaviour
 
     public bool isGrounded;
     private bool isCrouching;
-    public bool Running; // Add this line
+    public bool Running; 
 
     void Start()
     {
@@ -71,11 +71,10 @@ public class CharacterMover : MonoBehaviour
 
     void Move()
     {
-        // Check if player is attacking, set speed to 0 if true
         if (playerFireAttacks.IsAttacking() || playerEarthAttacks.IsAttacking())
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            Running = false; // Add this line
+            Running = false;
             return;
         }
 
@@ -92,8 +91,7 @@ public class CharacterMover : MonoBehaviour
             GetComponent<Rigidbody>().velocity = airMovement;
         }
 
-        // Check horizontal velocity and set Running
-        Running = Mathf.Abs(GetComponent<Rigidbody>().velocity.x) > 0.1f; // Add this line
+        Running = Mathf.Abs(GetComponent<Rigidbody>().velocity.x) > 0.1f; 
     }
 
     void Jump()

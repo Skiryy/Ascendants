@@ -35,7 +35,7 @@ public class finalEnemyActions : MonoBehaviour
     public GameObject movingWall4;
 
     private bool isAttacking = false;
-    private bool isTransitioning = false; // Add this line
+    private bool isTransitioning = false; 
 
     public GameObject barrierLeft;
     public GameObject barrierRight;
@@ -165,7 +165,7 @@ public class finalEnemyActions : MonoBehaviour
     {
         while (true)
         {
-            if (!isAttacking && !isTransitioning) // Check if not attacking and not transitioning
+            if (!isAttacking && !isTransitioning)
             {
                 chooseAttack();
             }
@@ -175,7 +175,7 @@ public class finalEnemyActions : MonoBehaviour
 
     void chooseAttack()
     {
-        if (isTransitioning) return; // Exit if transitioning
+        if (isTransitioning) return; 
 
         if (FinalEnemyScript.health > 201)
         {
@@ -322,35 +322,34 @@ public class finalEnemyActions : MonoBehaviour
             {
                 float waitTime = 1f;
 
-                // Perform the ice attack first
+
                 Vector3 offsetPosition = transform.position + Vector3.right * -1f;
                 GameObject iceAttackInstance = Instantiate(ice, offsetPosition, Quaternion.Euler(0, -90, 180));
-                activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(iceAttackInstance); 
                 Destroy(iceAttackInstance, 1f);
-                yield return new WaitForSeconds(waitTime); // Wait for the attack to be visible
+                yield return new WaitForSeconds(waitTime);
 
                 currentAttacks++;
-                yield return new WaitForSeconds(0.6f); // Wait before teleporting
-                transform.position = leftposition;    // Teleport to the left position
-                enemyRotation = true;                 // Change the rotation state
-                Rotate(enemyRotation);                // Immediately update the rotation
+                yield return new WaitForSeconds(0.6f); 
+                transform.position = leftposition;   
+                enemyRotation = true;                
+                Rotate(enemyRotation);               
             }
             else if (enemyRotation == true)
             {
                 float waitTime = UnityEngine.Random.Range(0.8f, 1f);
 
-                // Perform the ice attack first
                 Vector3 offsetPosition = transform.position + Vector3.right * 1f;
                 GameObject iceAttackInstance = Instantiate(ice, offsetPosition, Quaternion.Euler(0, 90, 0));
-                activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(iceAttackInstance); 
                 Destroy(iceAttackInstance, 1f);
-                yield return new WaitForSeconds(waitTime); // Wait for the attack to be visible
+                yield return new WaitForSeconds(waitTime); 
 
                 currentAttacks++;
-                yield return new WaitForSeconds(0.6f); // Wait before teleporting
-                transform.position = rightposition;   // Teleport to the right position
-                enemyRotation = false;                // Change the rotation state
-                Rotate(enemyRotation);                // Immediately update the rotation
+                yield return new WaitForSeconds(0.6f); 
+                transform.position = rightposition;   
+                enemyRotation = false;               
+                Rotate(enemyRotation);                
             }
         }
         animator.SetBool("inAirAttack", false);
@@ -376,10 +375,10 @@ public class finalEnemyActions : MonoBehaviour
                 Vector3 startingPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
                 Vector3 offsetPosition = startingPosition + Vector3.right * -1f;
                 GameObject fireAttackInstance = Instantiate(firePrefab, offsetPosition, Quaternion.Euler(0, -90, 0));
-                activeAttackObjects.Add(fireAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(fireAttackInstance);
                 Destroy(fireAttackInstance, 5f);
                 animator.SetTrigger("Idle");
-                yield return new WaitForSeconds(waitTime); // Wait for the attack to be 
+                yield return new WaitForSeconds(waitTime); 
                 currentAttacks++;
 
                 currentAttacks++;
@@ -390,10 +389,10 @@ public class finalEnemyActions : MonoBehaviour
                 Vector3 startingPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
                 Vector3 offsetPosition = transform.position + Vector3.right * 1f;
                 GameObject fireAttackInstance = Instantiate(firePrefab, offsetPosition, Quaternion.Euler(0, 90, 0));
-                activeAttackObjects.Add(fireAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(fireAttackInstance); 
                 Destroy(fireAttackInstance, 5f);
                 animator.SetTrigger("Idle");
-                yield return new WaitForSeconds(waitTime); // Wait for the attack to be 
+                yield return new WaitForSeconds(waitTime); 
                 currentAttacks++;
             }
         }
@@ -411,7 +410,7 @@ public class finalEnemyActions : MonoBehaviour
         {
             Vector3 pos = new Vector3(rand.Next(-10, 7), rand.Next(20, 30), 0);
             GameObject rainInstance = Instantiate(rainPrefab, pos, Quaternion.identity);
-            activeAttackObjects.Add(rainInstance); // Add to list of active objects
+            activeAttackObjects.Add(rainInstance); 
             yield return new WaitForSeconds(2f);
         }
     }
@@ -424,7 +423,7 @@ public class finalEnemyActions : MonoBehaviour
         if (enemyRotation == false)
         {
             Vector3 offsetPosition = transform.position + Vector3.right * (enemyRotation ? 1f : -1f);
-            bool moveLeft = enemyRotation; // Determine the direction based on enemy rotation
+            bool moveLeft = enemyRotation; 
 
             animator.SetTrigger("earthAttack");
             yield return new WaitForSeconds(0.3f);
@@ -479,7 +478,7 @@ public class finalEnemyActions : MonoBehaviour
         {
 
             Vector3 offsetPosition = transform.position + Vector3.right * (enemyRotation ? 1f : -1f);
-            bool moveLeft = enemyRotation; // Determine the direction based on enemy rotation
+            bool moveLeft = enemyRotation; 
 
             animator.SetTrigger("earthAttack");
 
@@ -542,7 +541,7 @@ public class finalEnemyActions : MonoBehaviour
         {
             Vector3 pos = new Vector3(rand.Next(-18, 14), rand.Next(20, 30), 0);
             GameObject rainInstance = Instantiate(rainPrefab, pos, Quaternion.identity);
-            activeAttackObjects.Add(rainInstance); // Add to list of active objects
+            activeAttackObjects.Add(rainInstance); 
             yield return new WaitForSeconds(1f);
         }
     }
@@ -562,11 +561,11 @@ public class finalEnemyActions : MonoBehaviour
         {
             float waitTime = UnityEngine.Random.Range(0.8f, 1f);
             Vector3 offsetPosition = transform.position + Vector3.right * (enemyRotation ? 1f : -1f);
-            // Perform the ice attacks
             for (int i = 0; i < 3; i++)
             {
                 GameObject iceAttackInstance = Instantiate(ice, offsetPosition, Quaternion.Euler(0, enemyRotation ? 90 : -90, 0));
-                activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(iceAttackInstance); 
+                activeAttackObjects.Add(iceAttackInstance); 
                 Destroy(iceAttackInstance, 10f);
                 yield return new WaitForSeconds(0.3f);
             }
@@ -575,7 +574,6 @@ public class finalEnemyActions : MonoBehaviour
             currentAttacks++;
             yield return new WaitForSeconds(1f);
             Debug.Log("Swap:" + swap);
-            // Update position and 
             if (swap == 1)
             {
                 transform.position = enemyRotation ? rightpositionP2 : leftpositionP2;
@@ -599,13 +597,12 @@ public class finalEnemyActions : MonoBehaviour
             Vector3 startingPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             Vector3 offsetPosition = startingPosition + Vector3.right * (enemyRotation ? 1f : -1f);
 
-            // Perform the fire attacks
             for (int i = 0; i < 3; i++)
             {
                 animator.SetTrigger("fireAttack");
                 yield return new WaitForSeconds(0.4f);
                 GameObject fireAttackInstance = Instantiate(firePrefab, offsetPosition, Quaternion.Euler(0, enemyRotation ? 90 : -90, 0));
-                activeAttackObjects.Add(fireAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(fireAttackInstance); 
                 Destroy(fireAttackInstance, 20f);
                 animator.SetTrigger("Idle");
                 yield return new WaitForSeconds(2f);
@@ -628,7 +625,7 @@ public class finalEnemyActions : MonoBehaviour
 
         Vector3 rockposition = new Vector3(transform.position.x, -1.5f, transform.position.z);
         GameObject rockInstance = Instantiate(rockPrefab, rockposition, Quaternion.identity);
-        activeAttackObjects.Add(rockInstance); // Add to list of active objects
+        activeAttackObjects.Add(rockInstance); 
 
         float duration = 2f;
         float elapsedTime = 0f;
@@ -638,14 +635,13 @@ public class finalEnemyActions : MonoBehaviour
         while (elapsedTime < duration)
         {
             float t = elapsedTime / duration;
-            float height = 10f * Mathf.Sin(Mathf.PI * t); // Adjust the height of the arc
+            float height = 10f * Mathf.Sin(Mathf.PI * t); 
             rockInstance.transform.position = Vector3.Lerp(startPosition, endPosition, t) + Vector3.up * height;
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Ensure the rock reaches the exact end position
         rockInstance.transform.position = endPosition;
         animator.SetTrigger("Idle");
         Destroy(rockInstance, 1f);
@@ -671,10 +667,10 @@ public class finalEnemyActions : MonoBehaviour
                 Vector3 startingPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
                 Vector3 offsetPosition = startingPosition + Vector3.right * -1f;
                 GameObject fireAttackInstance = Instantiate(rainbowFirePrefab, offsetPosition, Quaternion.Euler(0, -90, 0));
-                activeAttackObjects.Add(fireAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(fireAttackInstance); 
                 Destroy(fireAttackInstance, 5f);
                 animator.SetTrigger("Idle");
-                yield return new WaitForSecondsRealtime(2); // Wait for the attack to be 
+                yield return new WaitForSecondsRealtime(2); 
                 currentAttacks++;
 
                 currentAttacks++;
@@ -685,10 +681,10 @@ public class finalEnemyActions : MonoBehaviour
                 Vector3 startingPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
                 Vector3 offsetPosition = transform.position + Vector3.right * 1f;
                 GameObject fireAttackInstance = Instantiate(rainbowFirePrefab, offsetPosition, Quaternion.Euler(0, 90, 0));
-                activeAttackObjects.Add(fireAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(fireAttackInstance);
                 Destroy(fireAttackInstance, 5f);
                 animator.SetTrigger("Idle");
-                yield return new WaitForSecondsRealtime(2); // Wait for the attack to be 
+                yield return new WaitForSecondsRealtime(2); 
                 currentAttacks++;
             }
         }
@@ -714,15 +710,15 @@ public class finalEnemyActions : MonoBehaviour
                 // Perform the ice attack first
                 Vector3 offsetPosition = transform.position + Vector3.right * -1f;
                 GameObject iceAttackInstance = Instantiate(ice2, offsetPosition, Quaternion.Euler(0, -90, 180));
-                activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(iceAttackInstance); 
                 Destroy(iceAttackInstance, 1f);
-                yield return new WaitForSecondsRealtime(0.5f); // Wait for the attack to be visible
+                yield return new WaitForSecondsRealtime(0.5f); 
 
                 currentAttacks++;
-                yield return new WaitForSecondsRealtime(0.6f); // Wait before teleporting
-                transform.position = leftpositionP3;    // Teleport to the left position
-                enemyRotation = true;                 // Change the rotation state
-                Rotate(enemyRotation);                // Immediately update the rotation
+                yield return new WaitForSecondsRealtime(0.6f); 
+                transform.position = leftpositionP3;    
+                enemyRotation = true;                 
+                Rotate(enemyRotation);                
             }
             else if (enemyRotation == true)
             {
@@ -731,15 +727,15 @@ public class finalEnemyActions : MonoBehaviour
                 // Perform the ice attack first
                 Vector3 offsetPosition = transform.position + Vector3.right * 1f;
                 GameObject iceAttackInstance = Instantiate(ice2, offsetPosition, Quaternion.Euler(0, 90, 0));
-                activeAttackObjects.Add(iceAttackInstance); // Add to list of active objects
+                activeAttackObjects.Add(iceAttackInstance); 
                 Destroy(iceAttackInstance, 1f);
-                yield return new WaitForSecondsRealtime(0.5f); // Wait for the attack to be visible
+                yield return new WaitForSecondsRealtime(0.5f); 
 
                 currentAttacks++;
-                yield return new WaitForSecondsRealtime(0.6f); // Wait before teleporting
-                transform.position = rightpositionP3;   // Teleport to the right position
-                enemyRotation = false;                // Change the rotation state
-                Rotate(enemyRotation);                // Immediately update the rotation
+                yield return new WaitForSecondsRealtime(0.6f); 
+                transform.position = rightpositionP3;  
+                enemyRotation = false;               
+                Rotate(enemyRotation);             
             }
         }
         isAttacking = false;
